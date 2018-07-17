@@ -49,6 +49,6 @@ public class Fase0_manager : MonoBehaviour {
     {
         debugText.text = "Timer = " + timeCount.ToString() + "\n";
         //debugText.text += ;
-    }
+    }    
 }
 
