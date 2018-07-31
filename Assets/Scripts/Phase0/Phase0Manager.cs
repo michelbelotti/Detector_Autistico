@@ -10,7 +10,7 @@ public class Phase0Manager : MonoBehaviour {
     public GameObject prefabCharacter;
     public AudioClip[] sounds;
     
-    [HideInInspector]public int endPhase;
+    //[HideInInspector]public int endPhase;
 
     private AudioSource myAudioSource;
     private GameObject objCharacter;
@@ -18,14 +18,23 @@ public class Phase0Manager : MonoBehaviour {
     private GameManager scriptGameManager;
     private float timeCount;
 
-    void Start () {
+    private STATE phaseState;
+    private enum STATE
+    {
+        repeat,
+        ending,
+        finish,
+    }
+
+    void OnEnable()
+    {
 
         objGameManager = GameObject.Find("GameManager");
         scriptGameManager = objGameManager.GetComponent<GameManager>();
 
         objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
 
-        endPhase = 0;
+        phaseState = STATE.repeat;
         timeCount = 0;
 
         myAudioSource = GetComponent<AudioSource>();
@@ -36,7 +45,7 @@ public class Phase0Manager : MonoBehaviour {
 	
 	void Update () {
 
-        if (endPhase == 0)
+        if (phaseState == STATE.repeat)
         {
             if (!myAudioSource.isPlaying)
             {
@@ -51,19 +60,17 @@ public class Phase0Manager : MonoBehaviour {
                 }
             }
         }
-        else if (endPhase == 1)
+        else if (phaseState == STATE.ending)
         {
             myAudioSource.Stop();
             myAudioSource.clip = sounds[1];
             myAudioSource.Play();
-            changeState();
+            phaseState = STATE.finish;
         }
-        else if(endPhase == 2)
+        else if(phaseState == STATE.finish)
         {
             if (!myAudioSource.isPlaying)
             {
-                Destroy(objCharacter);
-                changeState();
                 scriptGameManager.nextPhase();
             }
         }
@@ -72,8 +79,14 @@ public class Phase0Manager : MonoBehaviour {
 
     public void changeState()
     {
-        endPhase++;
+        phaseState = STATE.ending;
     }
 
+    void OnDisable()
+    {
+        Debug.Log("OnDisable Phase 0");
+        myAudioSource.Stop();
+        Destroy(objCharacter);
+    }
 }
 

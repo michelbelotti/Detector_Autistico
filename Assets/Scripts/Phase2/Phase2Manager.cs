@@ -14,7 +14,7 @@ public class Phase2Manager : MonoBehaviour {
     private AudioSource myAudioSource;
     private GameObject objGameManager;
     private GameManager scriptGameManager;
-    private GameObject character;
+    private GameObject objCharacter;
     private float totalTimeCount;
     private float idleTimeCount;
 
@@ -39,7 +39,7 @@ public class Phase2Manager : MonoBehaviour {
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = sounds[0];
 
-        character = Instantiate(prefabCharacter, transform.position, transform.rotation);
+        objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
 
         touchLatency = new List<float>();
 
@@ -81,7 +81,6 @@ public class Phase2Manager : MonoBehaviour {
                     Debug.Log("touchLatency[" + touchLatency.IndexOf(item) + "] = " + item);
                 }
 
-                Destroy(character);
                 scriptGameManager.nextPhase();
             }
         }
@@ -107,5 +106,12 @@ public class Phase2Manager : MonoBehaviour {
             myAudioSource.Stop();
             myAudioSource.Play();
         }
+    }
+
+    void OnDisable()
+    {
+        Debug.Log("OnDisable Phase 2");
+        myAudioSource.Stop();
+        Destroy(objCharacter);
     }
 }

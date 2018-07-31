@@ -12,8 +12,8 @@ public class Phase1Manager : MonoBehaviour {
     
     private AudioSource myAudioSource;
     private GameObject objCharacter;
-    private GameObject objGameManager;
-    private GameManager scriptGameManager;
+    //private GameObject objGameManager;
+    //private GameManager scriptGameManager;
 
     private float timeCount;
 
@@ -26,14 +26,11 @@ public class Phase1Manager : MonoBehaviour {
         end,
     }
 
-    // Use this for initialization
-    void Start () {
-        Debug.Log("Phase 1 Start - Phase1Manager");
-
+    void OnEnable() {
         phaseState = STATE.init;
 
-        objGameManager = GameObject.Find("GameManager");
-        scriptGameManager = objGameManager.GetComponent<GameManager>();
+        //objGameManager = GameObject.Find("GameManager");
+        //scriptGameManager = objGameManager.GetComponent<GameManager>();
 
         objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
 
@@ -43,7 +40,6 @@ public class Phase1Manager : MonoBehaviour {
         myAudioSource.clip = sounds[0];
     }
 	
-	// Update is called once per frame
 	void Update () {
 
         if (!myAudioSource.isPlaying)
@@ -81,5 +77,12 @@ public class Phase1Manager : MonoBehaviour {
                 }
             }
         }
+    }
+
+    void OnDisable()
+    {
+        Debug.Log("OnDisable Phase 1");
+        myAudioSource.Stop();
+        Destroy(objCharacter);
     }
 }
