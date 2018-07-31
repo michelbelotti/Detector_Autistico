@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterClicked : MonoBehaviour {
+public class Phase0CharacterClicked : MonoBehaviour {
 
     private GameObject objManager;
     private Phase0Manager phase0Msg;

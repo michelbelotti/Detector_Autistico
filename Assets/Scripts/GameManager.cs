@@ -22,6 +22,15 @@ public class GameManager : MonoBehaviour {
     public void nextPhase()
     {
         phases[currentPhase].SetActive(false);
-        phases[++currentPhase].SetActive(true);
+        currentPhase++;
+        if (currentPhase < phases.Length)
+        {
+            phases[currentPhase].SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Game Ended!");
+        }
+        
     }
 }
