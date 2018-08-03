@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Phase_3_Manager : MonoBehaviour {
+public class Phase3Manager : MonoBehaviour {
 
+    public GameObject prefabPanel;
     public GameObject[] prefabCharacter;
     public float delayToStart = 2;
     public float idleTime = 5;
@@ -15,16 +16,18 @@ public class Phase_3_Manager : MonoBehaviour {
     public int tries;
     public int totalTries = 5;
 
+    public AudioClip soundInstruction;
     public AudioClip[] sounds;
 
     private AudioSource myAudioSource;
     private GameManager scriptGameManager;
+    private GameObject objPanel;
     private GameObject[] objCharacter;
     private Vector3[] objPostions;
     private float totalTimeCount;
 
-    ContactFilter2D filter;
-    Collider2D[] colliders;
+    private ContactFilter2D filter;
+    private Collider2D[] colliders;
 
     private int overlapCount;
 
@@ -46,7 +49,7 @@ public class Phase_3_Manager : MonoBehaviour {
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         myAudioSource = GetComponent<AudioSource>();
-        myAudioSource.clip = sounds[0];
+        myAudioSource.clip = soundInstruction;
 
         objCharacter = new GameObject[prefabCharacter.Length];
         objPostions = new Vector3[prefabCharacter.Length];
@@ -56,6 +59,8 @@ public class Phase_3_Manager : MonoBehaviour {
             objCharacter[i] = Instantiate(prefabCharacter[i], prefabCharacter[i].transform.position, prefabCharacter[i].transform.rotation);
             objPostions[i] = prefabCharacter[i].transform.position;
         }
+
+        objPanel = Instantiate(prefabPanel, prefabPanel.transform.position, prefabPanel.transform.rotation);
 
         overlapCount = 0;
 
@@ -75,7 +80,7 @@ public class Phase_3_Manager : MonoBehaviour {
         }
         
 
-        int currentOverlap = Physics2D.OverlapCollider(objCharacter[2].GetComponent<Collider2D>(), filter, colliders);
+        int currentOverlap = Physics2D.OverlapCollider(objPanel.GetComponent<Collider2D>(), filter, colliders);
 
         if (tries > totalTries)
         {
@@ -93,14 +98,24 @@ public class Phase_3_Manager : MonoBehaviour {
         }
     }
 
+    private void randomSound()
+    {
+        myAudioSource.Stop();
+        myAudioSource.clip = sounds[Random.Range(0, sounds.Length)];
+        myAudioSource.Play();
+    }
+
     void OnDisable()
     {
         Debug.Log("OnDisable Phase 3");
         //myAudioSource.Stop();
-        for (int i = 0; i < prefabCharacter.Length; i++)
+        for (int i = 0; i < objCharacter.Length; i++)
         {
             Destroy(objCharacter[i]);
         }
+
+        Destroy(objPanel);
+
         scriptGameManager.deactivateBtn();
     }
 
