@@ -23,7 +23,7 @@ public class Phase3Manager : MonoBehaviour {
     private GameManager scriptGameManager;
     private GameObject objPanel;
     private GameObject[] objCharacter;
-    private Vector3[] objPostions;
+    private Vector3[] objPositions;
     private float totalTimeCount;
 
     private ContactFilter2D filter;
@@ -52,12 +52,12 @@ public class Phase3Manager : MonoBehaviour {
         myAudioSource.clip = soundInstruction;
 
         objCharacter = new GameObject[prefabCharacter.Length];
-        objPostions = new Vector3[prefabCharacter.Length];
+        objPositions = new Vector3[prefabCharacter.Length];
 
         for (int i = 0; i < prefabCharacter.Length; i++)
         {
             objCharacter[i] = Instantiate(prefabCharacter[i], prefabCharacter[i].transform.position, prefabCharacter[i].transform.rotation);
-            objPostions[i] = prefabCharacter[i].transform.position;
+            objPositions[i] = prefabCharacter[i].transform.position;
         }
 
         objPanel = Instantiate(prefabPanel, prefabPanel.transform.position, prefabPanel.transform.rotation);
@@ -82,7 +82,7 @@ public class Phase3Manager : MonoBehaviour {
 
         int currentOverlap = Physics2D.OverlapCollider(objPanel.GetComponent<Collider2D>(), filter, colliders);
 
-        if (tries > totalTries)
+        if (tries >= totalTries)
         {
             scriptGameManager.activeBtn();
         }
@@ -90,9 +90,10 @@ public class Phase3Manager : MonoBehaviour {
         if (overlapCount != currentOverlap) {            
             if (currentOverlap > overlapCount)
             {
-                myAudioSource.Stop();
-                myAudioSource.clip = sounds[1];
-                myAudioSource.Play();
+                //myAudioSource.Stop();
+                //myAudioSource.clip = sounds[1];
+                //myAudioSource.Play();
+                randomSound();
             }
             overlapCount = currentOverlap;
         }
@@ -108,7 +109,7 @@ public class Phase3Manager : MonoBehaviour {
     void OnDisable()
     {
         Debug.Log("OnDisable Phase 3");
-        //myAudioSource.Stop();
+
         for (int i = 0; i < objCharacter.Length; i++)
         {
             Destroy(objCharacter[i]);
