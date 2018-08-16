@@ -12,11 +12,6 @@ public class Phase3DragObjects : MonoBehaviour {
         scriptPhase3 = GameObject.Find("Phase_3_Manager").GetComponent<Phase3Manager>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void drag()
     {
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);

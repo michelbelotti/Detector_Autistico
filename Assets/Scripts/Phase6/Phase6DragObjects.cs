@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Phase5DragObjects : MonoBehaviour
+public class Phase6DragObjects : MonoBehaviour
 {
 
-    private Phase5Manager scriptPhase;
+    private Phase6Manager scriptPhase;
 
     void Start()
     {
-        scriptPhase = GameObject.Find("Phase_5_Manager").GetComponent<Phase5Manager>();
+        scriptPhase = GameObject.Find("Phase_6_Manager").GetComponent<Phase6Manager>();
     }
 
     public void drag()

@@ -123,7 +123,9 @@ public class Phase4Manager : MonoBehaviour {
     void OnDisable()
     {
         Debug.Log("OnDisable Phase 4");
+
         myAudioSource.Stop();
+
         for (int i = 0; i < objCharacter.Length; i++)
         {
             Destroy(objCharacter[i]);

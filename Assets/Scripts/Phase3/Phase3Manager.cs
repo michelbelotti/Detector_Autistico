@@ -110,6 +110,8 @@ public class Phase3Manager : MonoBehaviour {
     {
         Debug.Log("OnDisable Phase 3");
 
+        myAudioSource.Stop();
+
         for (int i = 0; i < objCharacter.Length; i++)
         {
             Destroy(objCharacter[i]);

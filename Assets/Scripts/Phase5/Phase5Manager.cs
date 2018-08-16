@@ -54,7 +54,8 @@ public class Phase5Manager : MonoBehaviour {
 
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
-    
+
+        phaseState = STATE.firstCmd;
     }
 
     void Update()
@@ -109,5 +110,18 @@ public class Phase5Manager : MonoBehaviour {
             phaseState = STATE.resetingPos;
         }
 
+    }
+
+    void OnDisable()
+    {
+        Debug.Log("OnDisable Phase 5");
+
+        myAudioSource.Stop();
+
+        Destroy(objTarget);
+        Destroy(objDragable);
+        Destroy(objIndicator);
+
+        scriptGameManager.deactivateBtn();
     }
 }

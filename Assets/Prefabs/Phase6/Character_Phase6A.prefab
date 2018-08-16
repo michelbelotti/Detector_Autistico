@@ -21,11 +21,11 @@ GameObject:
   - component: {fileID: 4361481005176632}
   - component: {fileID: 212781594481645892}
   - component: {fileID: 61196178277643236}
-  - component: {fileID: 114446103253121642}
+  - component: {fileID: 114565819157849182}
   - component: {fileID: 114536249366860588}
   - component: {fileID: 61235642681165856}
   m_Layer: 0
-  m_Name: Character_Phase5B
+  m_Name: Character_Phase6A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,17 +94,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.25}
   m_EdgeRadius: 0
---- !u!114 &114446103253121642
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1597361156714230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9bb3c66b94a4cf44a3ff0d5f28bf0b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114536249366860588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -121,7 +110,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114446103253121642}
+        - m_Target: {fileID: 114565819157849182}
           m_MethodName: drag
           m_Mode: 1
           m_Arguments:
@@ -138,7 +127,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 114446103253121642}
+        - m_Target: {fileID: 114565819157849182}
           m_MethodName: release
           m_Mode: 1
           m_Arguments:
@@ -152,6 +141,17 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114565819157849182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1597361156714230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bf5d936ba163d64bb290b3a0f3c2c8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212781594481645892
 SpriteRenderer:
   m_ObjectHideFlags: 1
