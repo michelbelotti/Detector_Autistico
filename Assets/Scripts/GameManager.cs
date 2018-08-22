@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
     public GameObject[] phases;
+    public GameObject menu;
     public float buttonDelay = 3;
 
     public GameObject btnNextPhase;
@@ -19,7 +20,7 @@ public class GameManager : MonoBehaviour {
         currentPhase = 0;
         buttonTimer = 0;
         buttonClicked = false;
-        phases[currentPhase].SetActive(true);
+        menu.SetActive(true);
 
         deactivateBtn();
     }
@@ -97,4 +98,10 @@ public class GameManager : MonoBehaviour {
         btnNextPhase.SetActive(false);
         btnJumpPhase.SetActive(false);
     }
+
+    public void setPhaseTrue() {
+        phases[currentPhase].SetActive(true);
+        menu.SetActive(false);
+    }
+
 }
