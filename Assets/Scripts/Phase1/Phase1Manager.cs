@@ -4,71 +4,58 @@ using UnityEngine;
 
 public class Phase1Manager : MonoBehaviour {
 
-    public float initDelay = 3;
-    public float instructionDelay = 3;
+    public float delayToStart = 1;
     public float loopInterval = 3;
-    public GameObject prefabCharacter;
-    public AudioClip[] sounds;
     
+    public AudioClip soundInstruction;
+    public AudioClip soundToRepeat;
+
+    public GameObject prefabCharacter;
+
     private AudioSource myAudioSource;
     private GameObject objCharacter;
-    //private GameObject objGameManager;
-    //private GameManager scriptGameManager;
 
     private float timeCount;
 
     private STATE phaseState;
     private enum STATE
     {
-        init,
         instruction,
         repeat,
-        end,
     }
 
-    void OnEnable() {
-        phaseState = STATE.init;
-
-        //objGameManager = GameObject.Find("GameManager");
-        //scriptGameManager = objGameManager.GetComponent<GameManager>();
+    IEnumerator Start() {
+        phaseState = STATE.instruction;
 
         objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
 
         timeCount = 0;
 
         myAudioSource = GetComponent<AudioSource>();
-        myAudioSource.clip = sounds[0];
+        myAudioSource.clip = soundInstruction;
+
+        yield return new WaitForSeconds(delayToStart);
+
+        myAudioSource.Play();
+
+        yield return new WaitForSeconds(myAudioSource.clip.length);
+
+        myAudioSource.clip = soundToRepeat;
+
+        phaseState = STATE.repeat;
+
     }
 	
 	void Update () {
 
-        if (!myAudioSource.isPlaying)
+        timeCount += Time.deltaTime;
+
+        if (phaseState == STATE.repeat)
         {
-            timeCount += Time.deltaTime;
-
-            if (phaseState == STATE.init)
+            if (!myAudioSource.isPlaying)
             {
-                if (timeCount >= initDelay)
-                {
-                    timeCount = 0;
+                timeCount += Time.deltaTime;
 
-                    myAudioSource.Play();
-                    phaseState = STATE.instruction;
-                }
-            }
-            else if (phaseState == STATE.instruction)
-            {
-                if (timeCount >= instructionDelay)
-                {
-                    timeCount = 0;
-
-                    myAudioSource.clip = sounds[1];
-                    myAudioSource.Play();
-                    phaseState = STATE.repeat;
-                }
-            }
-            else if (phaseState == STATE.repeat)
-            {
                 if (timeCount >= loopInterval)
                 {
                     timeCount = 0;

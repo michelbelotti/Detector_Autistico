@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
         buttonClicked = false;
         menu.SetActive(true);
 
+
         deactivateBtn();
     }
 	

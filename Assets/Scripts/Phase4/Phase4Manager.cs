@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class Phase4Manager : MonoBehaviour {
 
+    public float delayToStart = 1;
     public float idleMaxTimer = 20;
 
-    public int overlapMax = 8;
+    public int maxObjToWin = 8;
     
     public GameObject prefabPanel;
-    public GameObject[] prefabCharacter;
+    public GameObject[] prefabCharacters;
 
+    public AudioClip soundInstruction;
     public AudioClip soundEnding;
-    public AudioClip[] sounds;
+    public AudioClip[] soundCongrats;
 
     private AudioSource myAudioSource;
     private GameManager scriptGameManager;
     private GameObject objPanel;
-    private GameObject[] objCharacter;
+    private GameObject[] objCharacters;
     private ContactFilter2D filter;
     private Collider2D[] colliders;
 
@@ -28,34 +30,43 @@ public class Phase4Manager : MonoBehaviour {
     private STATE phaseState;
     private enum STATE
     {
+        instruction,
         isPlaying,
         congrats,
         ending,
     }
 
-    void Start () {
+    IEnumerator Start () {
 
-        phaseState = STATE.isPlaying;
+        phaseState = STATE.instruction;
 
         timerCount = 0;
         overlapCount = 0;
 
         filter = new ContactFilter2D();
-        colliders = new Collider2D[prefabCharacter.Length];
+        colliders = new Collider2D[prefabCharacters.Length];
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        myAudioSource = GetComponent<AudioSource>();
-        myAudioSource.clip = sounds[0];
+        objCharacters = new GameObject[prefabCharacters.Length];
 
-        objCharacter = new GameObject[prefabCharacter.Length];
-
-        for (int i = 0; i < prefabCharacter.Length; i++)
+        for (int i = 0; i < prefabCharacters.Length; i++)
         {
-            objCharacter[i] = Instantiate(prefabCharacter[i], prefabCharacter[i].transform.position, prefabCharacter[i].transform.rotation);
+            objCharacters[i] = Instantiate(prefabCharacters[i], prefabCharacters[i].transform.position, prefabCharacters[i].transform.rotation);
         }
 
         objPanel = Instantiate(prefabPanel, prefabPanel.transform.position, prefabPanel.transform.rotation);
+
+        myAudioSource = GetComponent<AudioSource>();
+        myAudioSource.clip = soundInstruction;
+
+        yield return new WaitForSeconds(delayToStart);
+
+        myAudioSource.Play();
+
+        yield return new WaitForSeconds(myAudioSource.clip.length);
+
+        phaseState = STATE.isPlaying;
     }
 	
 	void Update () {
@@ -72,7 +83,7 @@ public class Phase4Manager : MonoBehaviour {
                 if (currentOverlap > overlapCount)
                 {
                     
-                    if (currentOverlap >= overlapMax)
+                    if (currentOverlap >= maxObjToWin)
                     {
                         phaseState = STATE.congrats;
                     }
@@ -111,7 +122,7 @@ public class Phase4Manager : MonoBehaviour {
     private void randomSound()
     {
         myAudioSource.Stop();
-        myAudioSource.clip = sounds[Random.Range(0, sounds.Length)];
+        myAudioSource.clip = soundCongrats[Random.Range(0, soundCongrats.Length)];
         myAudioSource.Play();
     }
 
@@ -126,9 +137,9 @@ public class Phase4Manager : MonoBehaviour {
 
         myAudioSource.Stop();
 
-        for (int i = 0; i < objCharacter.Length; i++)
+        for (int i = 0; i < objCharacters.Length; i++)
         {
-            Destroy(objCharacter[i]);
+            Destroy(objCharacters[i]);
         }
 
         Destroy(objPanel);

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Phase2Manager : MonoBehaviour {
 
-    public GameObject prefabCharacter;
-    public float delayToStart = 2;
+    public float delayToStart = 1;
     public float idleTime = 5;
     public float phaseTime = 30;
 
-    public AudioClip[] sounds;
+    public AudioClip soundInstruction;
+    public AudioClip soundToRepeat;
+
+    public GameObject prefabCharacter;
 
     private AudioSource myAudioSource;
     private GameObject objGameManager;
@@ -21,7 +23,7 @@ public class Phase2Manager : MonoBehaviour {
     private STATE phaseState;
     private enum STATE
     {
-        firstCmd,
+        instruction,
         firstInput,
         touchCounter,
         endPhase,
@@ -31,23 +33,21 @@ public class Phase2Manager : MonoBehaviour {
 
     IEnumerator Start()
     {
-        
+
+        phaseState = STATE.instruction;
 
         objGameManager = GameObject.Find("GameManager");
         scriptGameManager = objGameManager.GetComponent<GameManager>();
 
         myAudioSource = GetComponent<AudioSource>();
-        myAudioSource.clip = sounds[0];
+        myAudioSource.clip = soundInstruction;
 
         objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
 
         touchLatency = new List<float>();
 
-        phaseState = STATE.firstCmd;
-
         totalTimeCount = 0;
         idleTimeCount = 0;
-
 
         yield return new WaitForSeconds(delayToStart);
 
@@ -55,7 +55,7 @@ public class Phase2Manager : MonoBehaviour {
 
         yield return new WaitForSeconds(myAudioSource.clip.length);
 
-        myAudioSource.clip = sounds[1];
+        myAudioSource.clip = soundToRepeat;
         phaseState = STATE.firstInput;
 
     }
@@ -84,8 +84,6 @@ public class Phase2Manager : MonoBehaviour {
                 scriptGameManager.nextPhase();
             }
         }
-
-        
     }
 
     public void CharacterClicked()

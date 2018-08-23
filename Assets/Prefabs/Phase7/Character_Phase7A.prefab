@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4523512654114562}
   - component: {fileID: 58750115089309748}
-  - component: {fileID: 114305941292271458}
+  - component: {fileID: 114932614125665998}
   m_Layer: 0
   m_Name: Character_Phase7A
   m_TagString: Untagged
@@ -176,7 +176,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.25
---- !u!114 &114305941292271458
+--- !u!114 &114932614125665998
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,12 +184,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1057150543376054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c8d3a2ad1f7bf4694c85024444b07a, type: 3}
+  m_Script: {fileID: 11500000, guid: ade56b5441dc3ed4a8477ddc189c08a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glPlFltDeltaLimit: 20
-  glPlFltDeltaReduce: 0.25
-  glPlIntLapsBeforeStopping: 0
+  rotationSpeed: 10
+  lerpSpeed: 1
 --- !u!212 &212140589936404032
 SpriteRenderer:
   m_ObjectHideFlags: 1

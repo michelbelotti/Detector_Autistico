@@ -10,12 +10,13 @@ public class Phase6Manager : MonoBehaviour {
     public int tries;
     public int totalTries = 10;
 
+    public AudioClip soundInstruction;
+    public AudioClip soundCongrats;
+
     public GameObject prefabDragable;
     public GameObject prefabTargetLeft;
     public GameObject prefabTargetRight;
-    
-    public AudioClip soundCongrats;
-
+        
     private float totalTimeCount;
 
     private GameManager scriptGameManager;
@@ -32,12 +33,15 @@ public class Phase6Manager : MonoBehaviour {
     private STATE phaseState;
     private enum STATE
     {
+        instruction,
         isPlaying,
         resetingPos,
         endingPhase,
     }
 
-    void Start () {
+    IEnumerator Start () {
+
+        phaseState = STATE.instruction;
 
         tries = 0;
         totalTimeCount = 0;
@@ -52,9 +56,19 @@ public class Phase6Manager : MonoBehaviour {
         objTargetRight = Instantiate(prefabTargetRight, prefabTargetRight.transform.position, prefabTargetRight.transform.rotation);
 
         myAudioSource = GetComponent<AudioSource>();
-        myAudioSource.clip = soundCongrats;
+        myAudioSource.clip = soundInstruction;
 
-        phaseState = STATE.isPlaying;
+        yield return new WaitForSeconds(delayToStart);
+
+        myAudioSource.Play();
+
+        yield return new WaitForSeconds(myAudioSource.clip.length);
+
+        if (phaseState == STATE.instruction)
+        {
+            phaseState = STATE.isPlaying;
+        }
+
     }
 
     void Update()
@@ -66,12 +80,7 @@ public class Phase6Manager : MonoBehaviour {
             phaseState = STATE.endingPhase;
         }
 
-
-        if (phaseState == STATE.isPlaying)
-        {
-
-        }
-        else if (phaseState == STATE.resetingPos)
+        if (phaseState == STATE.resetingPos)
         {
             objDragable.transform.position = prefabDragable.transform.position;
             phaseState = STATE.isPlaying;
@@ -89,20 +98,19 @@ public class Phase6Manager : MonoBehaviour {
     {
         tries++;
 
-        int overlapLeft = Physics2D.OverlapCollider(objTargetLeft.GetComponent<Collider2D>(), filter, colliders);
         int overlapRight = Physics2D.OverlapCollider(objTargetRight.GetComponent<Collider2D>(), filter, colliders);
-
-        if(overlapLeft >= 2)
-        {
-            phaseState = STATE.resetingPos;
-        }
 
         if (overlapRight >= 2)
         {
+            myAudioSource.Stop();
+            myAudioSource.clip = soundCongrats;
             myAudioSource.Play();
             phaseState = STATE.endingPhase;
         }
-
+        else
+        {
+            phaseState = STATE.resetingPos;
+        }
     }
 
     void OnDisable()

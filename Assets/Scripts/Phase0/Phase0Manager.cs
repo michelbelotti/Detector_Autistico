@@ -6,11 +6,13 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class Phase0Manager : MonoBehaviour {
 
+    public float delayToStart = 1;
     public float loopInterval = 3;
-    public GameObject prefabCharacter;
-    public AudioClip[] sounds;
     
-    //[HideInInspector]public int endPhase;
+    public AudioClip soundInstruction;
+    public AudioClip soundCongrats;
+
+    public GameObject prefabCharacter;
 
     private AudioSource myAudioSource;
     private GameObject objCharacter;
@@ -21,26 +23,37 @@ public class Phase0Manager : MonoBehaviour {
     private STATE phaseState;
     private enum STATE
     {
+        instruction,
         repeat,
         ending,
         finish,
     }
 
-    void OnEnable()
+    IEnumerator Start()
     {
+
+        phaseState = STATE.instruction;
+
+        timeCount = 0;
 
         objGameManager = GameObject.Find("GameManager");
         scriptGameManager = objGameManager.GetComponent<GameManager>();
 
         objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
-
-        phaseState = STATE.repeat;
-        timeCount = 0;
-
+                
         myAudioSource = GetComponent<AudioSource>();
-        myAudioSource.clip = sounds[0];
+        myAudioSource.clip = soundInstruction;
+
+        yield return new WaitForSeconds(delayToStart);
+
         myAudioSource.Play();
 
+        yield return new WaitForSeconds(myAudioSource.clip.length);
+
+        if (phaseState == STATE.instruction)
+        {
+            phaseState = STATE.repeat;
+        }
     }
 	
 	void Update () {
@@ -55,7 +68,6 @@ public class Phase0Manager : MonoBehaviour {
                 {
                     timeCount = 0;
 
-                    myAudioSource.Stop();
                     myAudioSource.Play();
                 }
             }
@@ -63,7 +75,7 @@ public class Phase0Manager : MonoBehaviour {
         else if (phaseState == STATE.ending)
         {
             myAudioSource.Stop();
-            myAudioSource.clip = sounds[1];
+            myAudioSource.clip = soundCongrats;
             myAudioSource.Play();
             phaseState = STATE.finish;
         }

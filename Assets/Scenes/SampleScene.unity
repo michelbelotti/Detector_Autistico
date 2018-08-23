@@ -249,21 +249,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaacd9962da54584487e9ea3b888c943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabPanel: {fileID: 1400560799883180, guid: 98d51616e1f217a46b0ec88d164e7f46,
-    type: 2}
-  prefabCharacter:
-  - {fileID: 1400560799883180, guid: 983d1fd38e6ee5f4c9a4e1eafddc75dc, type: 2}
-  - {fileID: 1400560799883180, guid: e0e64edbce5d1b545ae9ddce9ef4d7f6, type: 2}
-  delayToStart: 2
+  delayToStart: 1
   idleTime: 5
   phaseTime: 30
-  overlapMax: 2
-  tries: 0
-  totalTries: 5
+  prefabPanel: {fileID: 1400560799883180, guid: 98d51616e1f217a46b0ec88d164e7f46,
+    type: 2}
+  prefabCharacters:
+  - {fileID: 1400560799883180, guid: 983d1fd38e6ee5f4c9a4e1eafddc75dc, type: 2}
+  - {fileID: 1400560799883180, guid: e0e64edbce5d1b545ae9ddce9ef4d7f6, type: 2}
   soundInstruction: {fileID: 8300000, guid: 3263d81cea2d8e640a93778a5b73030b, type: 3}
-  sounds:
-  - {fileID: 8300000, guid: 46af180c43ad1354ba3ab7c6b50335f8, type: 3}
-  - {fileID: 8300000, guid: 4d0d8d564a12bf248a4557951ad89b7c, type: 3}
+  soundsCongrats:
+  - {fileID: 8300000, guid: ae97c4bb9f8efce40871ac1058a2f219, type: 3}
+  - {fileID: 8300000, guid: 36a5ceb163d72bd4b9e27dc4f9b0c0f9, type: 3}
+  - {fileID: 8300000, guid: d96fbfe18c6205b4bbc892a7b4813bdc, type: 3}
 --- !u!1 &51464659
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,14 +548,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff16732fb4d7f246b7f2f32d7106641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initDelay: 3
-  instructionDelay: 3
+  delayToStart: 1
   loopInterval: 3
+  soundInstruction: {fileID: 8300000, guid: 16fc01a90db40a149abc1a6735f83bc9, type: 3}
+  soundToRepeat: {fileID: 8300000, guid: e62d24c8d81f1cb4a8273abd0f60de61, type: 3}
   prefabCharacter: {fileID: 1607878361062042, guid: 939013b613149b64f800e484fb997ee1,
     type: 2}
-  sounds:
-  - {fileID: 8300000, guid: 16fc01a90db40a149abc1a6735f83bc9, type: 3}
-  - {fileID: 8300000, guid: e62d24c8d81f1cb4a8273abd0f60de61, type: 3}
 --- !u!1 &238928922
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,12 +994,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec263343911b8f4aa8bf44c269a8082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayToStart: 1
   loopInterval: 3
+  soundInstruction: {fileID: 8300000, guid: 61591e8ef78f6a94abe4257b29bfb387, type: 3}
+  soundCongrats: {fileID: 8300000, guid: a27a7ce7aed19154c84228afaa4e7c68, type: 3}
   prefabCharacter: {fileID: 1206228929200308, guid: 39cbc5246d98615418febd48d80a9bab,
     type: 2}
-  sounds:
-  - {fileID: 8300000, guid: 61591e8ef78f6a94abe4257b29bfb387, type: 3}
-  - {fileID: 8300000, guid: a27a7ce7aed19154c84228afaa4e7c68, type: 3}
 --- !u!82 &510785376
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1497,6 +1493,7 @@ MonoBehaviour:
   - {fileID: 879812827}
   - {fileID: 958261624}
   - {fileID: 280801500}
+  menu: {fileID: 0}
   buttonDelay: 0.1
   btnNextPhase: {fileID: 665582940}
   btnJumpPhase: {fileID: 313442673}
@@ -1650,18 +1647,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayToStart: 1
-  tries: 0
-  totalTries: 5
+  soundInstruction: {fileID: 8300000, guid: 6dd924b53f5815d4baa37892517f41e8, type: 3}
+  soundsCongrats:
+  - {fileID: 8300000, guid: 36a5ceb163d72bd4b9e27dc4f9b0c0f9, type: 3}
+  - {fileID: 8300000, guid: d96fbfe18c6205b4bbc892a7b4813bdc, type: 3}
+  - {fileID: 8300000, guid: ae97c4bb9f8efce40871ac1058a2f219, type: 3}
   prefabTarget: {fileID: 1898225972281578, guid: 1c22c7d15aa861e408dc777adb5616f4,
     type: 2}
   prefabDragable: {fileID: 1597361156714230, guid: 5f685022935422142becd09c693249c8,
     type: 2}
   prefabIndicator: {fileID: 1474147204127072, guid: 7e526a52e88ad984aaea2c8c4ea9a3fa,
     type: 2}
-  soundInstruction: {fileID: 8300000, guid: 6dd924b53f5815d4baa37892517f41e8, type: 3}
-  sounds:
-  - {fileID: 8300000, guid: 4d0d8d564a12bf248a4557951ad89b7c, type: 3}
-  - {fileID: 8300000, guid: 46af180c43ad1354ba3ab7c6b50335f8, type: 3}
 --- !u!1 &958261624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,13 +1797,14 @@ MonoBehaviour:
   delayToStart: 1
   tries: 0
   totalTries: 10
+  soundInstruction: {fileID: 8300000, guid: 6dd924b53f5815d4baa37892517f41e8, type: 3}
+  soundCongrats: {fileID: 8300000, guid: 46af180c43ad1354ba3ab7c6b50335f8, type: 3}
   prefabDragable: {fileID: 1597361156714230, guid: 3d3259f99ea21bb4f83d9caa05c56985,
     type: 2}
   prefabTargetLeft: {fileID: 1898225972281578, guid: 11c9ef95e6d9c994f82ea500f4700b17,
     type: 2}
   prefabTargetRight: {fileID: 1898225972281578, guid: c8c42e11b80dabd4a882f0d872579247,
     type: 2}
-  soundCongrats: {fileID: 8300000, guid: 46af180c43ad1354ba3ab7c6b50335f8, type: 3}
 --- !u!1 &1161359455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,14 +1985,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a741164fe768cb47bdf383fbba8c04c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabCharacter: {fileID: 1400560799883180, guid: ce0327200c5ae974c824dce4092afa76,
-    type: 2}
-  delayToStart: 2
+  delayToStart: 1
   idleTime: 5
   phaseTime: 30
-  sounds:
-  - {fileID: 8300000, guid: 77c04e007f5e67f4991c36ab3b1e0da2, type: 3}
-  - {fileID: 8300000, guid: e62d24c8d81f1cb4a8273abd0f60de61, type: 3}
+  soundInstruction: {fileID: 8300000, guid: 77c04e007f5e67f4991c36ab3b1e0da2, type: 3}
+  soundToRepeat: {fileID: 8300000, guid: e62d24c8d81f1cb4a8273abd0f60de61, type: 3}
+  prefabCharacter: {fileID: 1400560799883180, guid: ce0327200c5ae974c824dce4092afa76,
+    type: 2}
 --- !u!82 &1309385740
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2480,11 +2476,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91fb24936209ebb4399690b9563448d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayToStart: 1
   idleMaxTimer: 20
-  overlapMax: 8
+  maxObjToWin: 8
   prefabPanel: {fileID: 1400560799883180, guid: 13684575ea4b4b64d9c4cf4085f82fa9,
     type: 2}
-  prefabCharacter:
+  prefabCharacters:
   - {fileID: 1427523684982478, guid: ab36350a3556b7e4a8ac2c3f96f7d6ce, type: 2}
   - {fileID: 1427523684982478, guid: 85ecabd1ef164c2498535ea20688e523, type: 2}
   - {fileID: 1427523684982478, guid: 23b1816ff93b28d4eb27d4f5e2e750c9, type: 2}
@@ -2493,10 +2490,11 @@ MonoBehaviour:
   - {fileID: 1427523684982478, guid: bcc138743c8bd554a90ae457ef28dd98, type: 2}
   - {fileID: 1427523684982478, guid: 496bf6ca41b48c745955fbaeeddbad74, type: 2}
   - {fileID: 1427523684982478, guid: 2432750725975724ca62fc7c7febae97, type: 2}
+  soundInstruction: {fileID: 8300000, guid: 3263d81cea2d8e640a93778a5b73030b, type: 3}
   soundEnding: {fileID: 8300000, guid: 46af180c43ad1354ba3ab7c6b50335f8, type: 3}
-  sounds:
-  - {fileID: 8300000, guid: ae97c4bb9f8efce40871ac1058a2f219, type: 3}
+  soundCongrats:
   - {fileID: 8300000, guid: 36a5ceb163d72bd4b9e27dc4f9b0c0f9, type: 3}
+  - {fileID: 8300000, guid: ae97c4bb9f8efce40871ac1058a2f219, type: 3}
   - {fileID: 8300000, guid: d96fbfe18c6205b4bbc892a7b4813bdc, type: 3}
 --- !u!1 &2141381286
 GameObject:

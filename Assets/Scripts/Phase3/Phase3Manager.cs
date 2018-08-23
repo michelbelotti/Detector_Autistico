@@ -4,25 +4,19 @@ using UnityEngine;
 
 public class Phase3Manager : MonoBehaviour {
 
-    public GameObject prefabPanel;
-    public GameObject[] prefabCharacter;
-    public float delayToStart = 2;
+    public float delayToStart = 1;
     public float idleTime = 5;
     public float phaseTime = 30;
 
-    public int overlapMax = 2;
-    
-    [HideInInspector]
-    public int tries;
-    public int totalTries = 5;
+    public GameObject prefabPanel;
+    public GameObject[] prefabCharacters;
 
     public AudioClip soundInstruction;
-    public AudioClip[] sounds;
+    public AudioClip[] soundsCongrats;
 
     private AudioSource myAudioSource;
-    private GameManager scriptGameManager;
     private GameObject objPanel;
-    private GameObject[] objCharacter;
+    private GameObject[] objCharacters;
     private Vector3[] objPositions;
     private float totalTimeCount;
 
@@ -34,75 +28,64 @@ public class Phase3Manager : MonoBehaviour {
     private STATE phaseState;
     private enum STATE
     {
-        firstCmd,
+        instruction,
         isPlaying,
     }
 
-    // Use this for initialization
-    void Start () {
+    IEnumerator Start () {
 
-        tries = 0;
+        phaseState = STATE.instruction;
+
+        overlapCount = 0;
 
         filter = new ContactFilter2D();
-        colliders = new Collider2D[prefabCharacter.Length];
+        colliders = new Collider2D[prefabCharacters.Length];
 
-        scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        objCharacters = new GameObject[prefabCharacters.Length];
+        objPositions = new Vector3[prefabCharacters.Length];
 
-        myAudioSource = GetComponent<AudioSource>();
-        myAudioSource.clip = soundInstruction;
-
-        objCharacter = new GameObject[prefabCharacter.Length];
-        objPositions = new Vector3[prefabCharacter.Length];
-
-        for (int i = 0; i < prefabCharacter.Length; i++)
+        for (int i = 0; i < prefabCharacters.Length; i++)
         {
-            objCharacter[i] = Instantiate(prefabCharacter[i], prefabCharacter[i].transform.position, prefabCharacter[i].transform.rotation);
-            objPositions[i] = prefabCharacter[i].transform.position;
+            objCharacters[i] = Instantiate(prefabCharacters[i], prefabCharacters[i].transform.position, prefabCharacters[i].transform.rotation);
+            objPositions[i] = prefabCharacters[i].transform.position;
         }
 
         objPanel = Instantiate(prefabPanel, prefabPanel.transform.position, prefabPanel.transform.rotation);
 
-        overlapCount = 0;
+        myAudioSource = GetComponent<AudioSource>();
+        myAudioSource.clip = soundInstruction;
+
+        yield return new WaitForSeconds(delayToStart);
+
+        myAudioSource.Play();
+
+        yield return new WaitForSeconds(myAudioSource.clip.length);
+
+        phaseState = STATE.isPlaying;
 
     }
 	
-	// Update is called once per frame
 	void Update () {
 
-        totalTimeCount += Time.deltaTime;
-        if(phaseState == STATE.firstCmd)
+        if (phaseState == STATE.isPlaying)
         {
-            if (totalTimeCount > delayToStart)
+            int currentOverlap = Physics2D.OverlapCollider(objPanel.GetComponent<Collider2D>(), filter, colliders);
+
+            if (overlapCount != currentOverlap)
             {
-                myAudioSource.Play();
-                phaseState = STATE.isPlaying;
+                if (currentOverlap > overlapCount)
+                {
+                    randomSound();
+                }
+                overlapCount = currentOverlap;
             }
-        }
-        
-
-        int currentOverlap = Physics2D.OverlapCollider(objPanel.GetComponent<Collider2D>(), filter, colliders);
-
-        if (tries >= totalTries)
-        {
-            scriptGameManager.activeBtn();
-        }
-
-        if (overlapCount != currentOverlap) {            
-            if (currentOverlap > overlapCount)
-            {
-                //myAudioSource.Stop();
-                //myAudioSource.clip = sounds[1];
-                //myAudioSource.Play();
-                randomSound();
-            }
-            overlapCount = currentOverlap;
         }
     }
 
     private void randomSound()
     {
         myAudioSource.Stop();
-        myAudioSource.clip = sounds[Random.Range(0, sounds.Length)];
+        myAudioSource.clip = soundsCongrats[Random.Range(0, soundsCongrats.Length)];
         myAudioSource.Play();
     }
 
@@ -112,14 +95,12 @@ public class Phase3Manager : MonoBehaviour {
 
         myAudioSource.Stop();
 
-        for (int i = 0; i < objCharacter.Length; i++)
+        for (int i = 0; i < objCharacters.Length; i++)
         {
-            Destroy(objCharacter[i]);
+            Destroy(objCharacters[i]);
         }
 
         Destroy(objPanel);
-
-        scriptGameManager.deactivateBtn();
     }
 
 }

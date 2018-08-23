@@ -6,18 +6,12 @@ public class Phase5Manager : MonoBehaviour {
 
     public float delayToStart = 1;
 
-    [HideInInspector]
-    public int tries;
-    public int totalTries = 5;
+    public AudioClip soundInstruction;
+    public AudioClip[] soundsCongrats;
 
     public GameObject prefabTarget;
     public GameObject prefabDragable;
     public GameObject prefabIndicator;
-
-    public AudioClip soundInstruction;
-    public AudioClip[] sounds;
-
-    private float totalTimeCount;
 
     private GameManager scriptGameManager;
 
@@ -33,15 +27,14 @@ public class Phase5Manager : MonoBehaviour {
     private STATE phaseState;
     private enum STATE
     {
-        firstCmd,
+        instruction,
         isPlaying,
         resetingPos,
     }
 
-    void Start () {
+    IEnumerator Start () {
 
-        tries = 0;
-        totalTimeCount = 0;
+        phaseState = STATE.instruction;
 
         filter = new ContactFilter2D();
         colliders = new Collider2D[2];
@@ -55,31 +48,18 @@ public class Phase5Manager : MonoBehaviour {
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
 
-        phaseState = STATE.firstCmd;
+        yield return new WaitForSeconds(delayToStart);
+
+        myAudioSource.Play();
+
+        yield return new WaitForSeconds(myAudioSource.clip.length);
+
+        phaseState = STATE.isPlaying;
     }
 
     void Update()
     {
-        totalTimeCount += Time.deltaTime;
-
-        if (tries >= totalTries)
-        {
-            scriptGameManager.activeBtn();
-        }
-
-        if (phaseState == STATE.firstCmd)
-        {
-            if (totalTimeCount > delayToStart)
-            {
-                myAudioSource.Play();
-                phaseState = STATE.isPlaying;
-            }
-        }
-        else if (phaseState == STATE.isPlaying)
-        {
-
-        }
-        else if (phaseState == STATE.resetingPos)
+        if (phaseState == STATE.resetingPos)
         {
             if(!myAudioSource.isPlaying)
             {
@@ -92,14 +72,12 @@ public class Phase5Manager : MonoBehaviour {
     private void randomSound()
     {
         myAudioSource.Stop();
-        myAudioSource.clip = sounds[Random.Range(0, sounds.Length)];
+        myAudioSource.clip = soundsCongrats[Random.Range(0, soundsCongrats.Length)];
         myAudioSource.Play();
     }
 
     public void ObjectRelease()
     {
-        tries++;
-
         int currentOverlap = Physics2D.OverlapCollider(objTarget.GetComponent<Collider2D>(), filter, colliders);
 
         Debug.Log("currentOverlap " + currentOverlap);
@@ -107,9 +85,10 @@ public class Phase5Manager : MonoBehaviour {
         if(currentOverlap >= 2)
         {
             randomSound();
-            phaseState = STATE.resetingPos;
+            
         }
 
+        phaseState = STATE.resetingPos;
     }
 
     void OnDisable()
