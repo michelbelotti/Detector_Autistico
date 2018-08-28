@@ -101,6 +101,6 @@ public class Phase5Manager : MonoBehaviour {
         Destroy(objDragable);
         Destroy(objIndicator);
 
-        scriptGameManager.deactivateBtn();
+        //scriptGameManager.deactivateBtn();
     }
 }

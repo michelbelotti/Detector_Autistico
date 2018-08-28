@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour {
     public GameObject menu;
     public float buttonDelay = 3;
 
-    public GameObject btnNextPhase;
-    public GameObject btnJumpPhase;
+    //public GameObject btnNextPhase;
+    //public GameObject btnJumpPhase;
 
     private int currentPhase;
     private float buttonTimer;
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
         menu.SetActive(true);
 
 
-        deactivateBtn();
+        //deactivateBtn();
     }
 	
 	void Update () {
@@ -88,17 +88,17 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void activeBtn()
-    {
-        btnNextPhase.SetActive(true);
-        btnJumpPhase.SetActive(true);
-    }
+    //public void activeBtn()
+    //{
+    //    btnNextPhase.SetActive(true);
+    //    btnJumpPhase.SetActive(true);
+    //}
 
-    public void deactivateBtn()
-    {
-        btnNextPhase.SetActive(false);
-        btnJumpPhase.SetActive(false);
-    }
+    //public void deactivateBtn()
+    //{
+    //    btnNextPhase.SetActive(false);
+    //    btnJumpPhase.SetActive(false);
+    //}
 
     public void setPhaseTrue() {
         phases[currentPhase].SetActive(true);

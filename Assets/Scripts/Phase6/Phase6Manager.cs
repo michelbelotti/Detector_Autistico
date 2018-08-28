@@ -16,7 +16,8 @@ public class Phase6Manager : MonoBehaviour {
     public GameObject prefabDragable;
     public GameObject prefabTargetLeft;
     public GameObject prefabTargetRight;
-        
+    public GameObject prefabIndicator;
+
     private float totalTimeCount;
 
     private GameManager scriptGameManager;
@@ -24,6 +25,7 @@ public class Phase6Manager : MonoBehaviour {
     private GameObject objDragable;
     private GameObject objTargetLeft;
     private GameObject objTargetRight;
+    private GameObject objIndicator;
 
     private AudioSource myAudioSource;
 
@@ -54,6 +56,7 @@ public class Phase6Manager : MonoBehaviour {
         objDragable = Instantiate(prefabDragable, prefabDragable.transform.position, prefabDragable.transform.rotation);
         objTargetLeft = Instantiate(prefabTargetLeft, prefabTargetLeft.transform.position, prefabTargetLeft.transform.rotation);
         objTargetRight = Instantiate(prefabTargetRight, prefabTargetRight.transform.position, prefabTargetRight.transform.rotation);
+        objIndicator = Instantiate(prefabIndicator, prefabIndicator.transform.position, prefabIndicator.transform.rotation);
 
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
@@ -122,5 +125,6 @@ public class Phase6Manager : MonoBehaviour {
         Destroy(objDragable);
         Destroy(objTargetLeft);
         Destroy(objTargetRight);
+        Destroy(objIndicator);
     }
 }

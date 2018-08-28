@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Phase4Manager : MonoBehaviour {
 
@@ -15,6 +16,9 @@ public class Phase4Manager : MonoBehaviour {
     public AudioClip soundInstruction;
     public AudioClip soundEnding;
     public AudioClip[] soundCongrats;
+
+    public GameObject objReport;
+    private Report_Manage rm;
 
     private AudioSource myAudioSource;
     private GameManager scriptGameManager;
@@ -47,8 +51,9 @@ public class Phase4Manager : MonoBehaviour {
         colliders = new Collider2D[prefabCharacters.Length];
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        rm = objReport.GetComponent<Report_Manage>();
 
-        objCharacters = new GameObject[prefabCharacters.Length];
+    objCharacters = new GameObject[prefabCharacters.Length];
 
         for (int i = 0; i < prefabCharacters.Length; i++)
         {
@@ -131,11 +136,22 @@ public class Phase4Manager : MonoBehaviour {
         timerCount = 0;
     }
 
+    public void finalPositionsObjs()
+    {
+        foreach (GameObject go in objCharacters)
+        {
+            rm.positionsObjs.Add(go.transform.position);
+        }
+    }
+
     void OnDisable()
     {
         Debug.Log("OnDisable Phase 4");
 
         myAudioSource.Stop();
+
+        //envia posicao dos objs instanciados para relatorio
+        finalPositionsObjs();
 
         for (int i = 0; i < objCharacters.Length; i++)
         {
@@ -143,5 +159,8 @@ public class Phase4Manager : MonoBehaviour {
         }
 
         Destroy(objPanel);
+
     }
+
+
 }
