@@ -28,6 +28,12 @@ public class Report_Manage : MonoBehaviour {
     private GameObject objPanel;
 
 
+    //Panel Report Phases
+    public GameObject panelPhase2;
+    public GameObject panelPhase6;
+    public GameObject panelPhase7;
+
+
     // Use this for initialization
     void Start () {
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -48,14 +54,10 @@ public class Report_Manage : MonoBehaviour {
         next.gameObject.SetActive(true);
         back.gameObject.SetActive(false);
 
-    }
+        panelPhase2.SetActive(false);
+        panelPhase6.SetActive(false);
+        panelPhase7.SetActive(false);
 
-    public string a = "1\n2\n3\n4\n5\n6\n7\n8zn9\n10!";
-
-    void OnGUI()
-    {        
-        var aa = GUI.TextArea(new Rect(10, 30, 100, 100), a, 200);
-        //GUI.Label(new Rect(10, 10, 100, 100), textArea, );
     }
 
     public void nextReport()
@@ -69,6 +71,10 @@ public class Report_Manage : MonoBehaviour {
         next.gameObject.SetActive(false);
         back.gameObject.SetActive(true);
 
+        panelPhase2.SetActive(true);
+        panelPhase6.SetActive(true);
+        panelPhase7.SetActive(true);
+
         //mostrando dados das outras fases
     }
 
@@ -81,6 +87,10 @@ public class Report_Manage : MonoBehaviour {
 
         next.gameObject.SetActive(true);
         back.gameObject.SetActive(false);
+
+        panelPhase2.SetActive(false);
+        panelPhase6.SetActive(false);
+        panelPhase7.SetActive(false);
     }
 
 }
