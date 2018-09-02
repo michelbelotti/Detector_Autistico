@@ -118,6 +118,16 @@ public class Phase2Manager : MonoBehaviour {
         myAudioSource.Stop();
         Destroy(objCharacter);
 
-        rm.phase2Total.text = "aaa";
+        // envia informacoes para relatorio
+        rm.phase2Total.text = "Total : " + touchLatency.Count;
+        float average = 0;
+        rm.phase2latency.text = "";
+        foreach (float t in touchLatency)
+        {
+            average += t;
+            rm.phase2latency.text += "" + t + "; ";
+        }
+        average = average / touchLatency.Count;
+        rm.phase2average.text = "Latencia Média: " + average;
     }
 }
