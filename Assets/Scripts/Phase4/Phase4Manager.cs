@@ -17,6 +17,7 @@ public class Phase4Manager : MonoBehaviour {
     public AudioClip soundEnding;
     public AudioClip[] soundCongrats;
 
+    //Relatório Variaveis
     public GameObject objReport;
     private Report_Manage rm;
 
@@ -51,6 +52,7 @@ public class Phase4Manager : MonoBehaviour {
         colliders = new Collider2D[prefabCharacters.Length];
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         rm = objReport.GetComponent<Report_Manage>();
 
     objCharacters = new GameObject[prefabCharacters.Length];

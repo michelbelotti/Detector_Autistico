@@ -30,6 +30,10 @@ public class Report_Manage : MonoBehaviour {
 
     //Panel Report Phases
     public GameObject panelPhase2;
+    public Text phase2Total;
+    public Text phase2average;
+    public Text phase2latency;
+
     public GameObject panelPhase6;
     public GameObject panelPhase7;
 

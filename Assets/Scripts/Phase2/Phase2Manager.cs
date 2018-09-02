@@ -13,6 +13,10 @@ public class Phase2Manager : MonoBehaviour {
 
     public GameObject prefabCharacter;
 
+    // Variaveis Relatório
+    public GameObject objReport;
+    private Report_Manage rm;
+
     private AudioSource myAudioSource;
     private GameObject objGameManager;
     private GameManager scriptGameManager;
@@ -38,6 +42,8 @@ public class Phase2Manager : MonoBehaviour {
 
         objGameManager = GameObject.Find("GameManager");
         scriptGameManager = objGameManager.GetComponent<GameManager>();
+
+        rm = objReport.GetComponent<Report_Manage>();
 
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
@@ -111,5 +117,7 @@ public class Phase2Manager : MonoBehaviour {
         Debug.Log("OnDisable Phase 2");
         myAudioSource.Stop();
         Destroy(objCharacter);
+
+        rm.phase2Total.text = "aaa";
     }
 }
