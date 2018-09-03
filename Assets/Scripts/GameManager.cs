@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 
     public GameObject[] phases;
     public GameObject menu;
+    public GameObject report;
     public float buttonDelay = 3;
 
     //public GameObject btnNextPhase;
@@ -103,6 +104,13 @@ public class GameManager : MonoBehaviour {
     public void setPhaseTrue() {
         phases[currentPhase].SetActive(true);
         menu.SetActive(false);
+    }
+
+    public void finishReport()
+    {
+        report.SetActive(false);
+        currentPhase = 0;
+        menu.SetActive(true);
     }
 
 }

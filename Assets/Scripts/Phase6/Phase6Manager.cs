@@ -18,6 +18,10 @@ public class Phase6Manager : MonoBehaviour {
     public GameObject prefabTargetRight;
     public GameObject prefabIndicator;
 
+    // Variaveis Relatório
+    public GameObject objReport;
+    private Report_Manage rm;
+
     private float totalTimeCount;
 
     private GameManager scriptGameManager;
@@ -52,6 +56,8 @@ public class Phase6Manager : MonoBehaviour {
         colliders = new Collider2D[2];
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        rm = objReport.GetComponent<Report_Manage>();
 
         objDragable = Instantiate(prefabDragable, prefabDragable.transform.position, prefabDragable.transform.rotation);
         objTargetLeft = Instantiate(prefabTargetLeft, prefabTargetLeft.transform.position, prefabTargetLeft.transform.rotation);
@@ -121,6 +127,9 @@ public class Phase6Manager : MonoBehaviour {
         Debug.Log("OnDisable Phase 6");
 
         myAudioSource.Stop();
+
+        // Mensagem para Report
+        rm.phase6Total.text = "Total de Tentativas: " + tries;
 
         Destroy(objDragable);
         Destroy(objTargetLeft);
