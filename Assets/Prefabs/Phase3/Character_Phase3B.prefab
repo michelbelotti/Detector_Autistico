@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4629531782918100}
   - component: {fileID: 212220037185497252}
-  - component: {fileID: 61325123531742628}
   - component: {fileID: 114786828701803386}
   - component: {fileID: 114227017722233498}
+  - component: {fileID: 61868697656330168}
   m_Layer: 0
   m_Name: Character_Phase3B
   m_TagString: Untagged
@@ -38,12 +38,12 @@ Transform:
   m_GameObject: {fileID: 1400560799883180}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3, y: -2.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61325123531742628
+--- !u!61 &61868697656330168
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,14 +59,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 10.24, y: 10.24}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 10.24, y: 10.24}
   m_EdgeRadius: 0
 --- !u!114 &114227017722233498
 MonoBehaviour:
@@ -144,8 +144,8 @@ SpriteRenderer:
   m_SortingLayerID: 1781527055
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6cf5ead8f0d511c4f94e833b854c0d69, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.98039216, a: 1}
+  m_Sprite: {fileID: 21300000, guid: e9d0e9d917d72c545bd80c6cc15c9220, type: 3}
+  m_Color: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
