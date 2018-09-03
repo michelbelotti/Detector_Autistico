@@ -105,10 +105,10 @@ public class Phase7Manager : MonoBehaviour {
         foreach (float t in touchLatency)
         {
             average += t;
-            rm.phase7latency.text += "" + t + "; ";
+            rm.phase7latency.text += "" + System.Math.Round(t, 2) + "; ";
         }
         average = average / touchLatency.Count;
-        rm.phase7average.text = "Latencia Média: " + average;
+        rm.phase7average.text = "Latencia Média: " + System.Math.Round(average, 2);
 
         Destroy(objCharacter);
     }

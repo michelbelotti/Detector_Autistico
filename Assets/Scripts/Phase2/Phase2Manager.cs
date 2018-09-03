@@ -125,9 +125,9 @@ public class Phase2Manager : MonoBehaviour {
         foreach (float t in touchLatency)
         {
             average += t;
-            rm.phase2latency.text += "" + t + "; ";
+            rm.phase2latency.text += "" + System.Math.Round(t, 2) + "; ";
         }
         average = average / touchLatency.Count;
-        rm.phase2average.text = "Latencia Média: " + average;
+        rm.phase2average.text = "Latencia Média: " + System.Math.Round(average, 2);
     }
 }
