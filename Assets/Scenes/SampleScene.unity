@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delayToStart: 1
-  totalTimer: 5
+  totalTimer: 60
   prefabCharacter: {fileID: 1057150543376054, guid: 0b61eabc7d8da4845b50a76ee6e86c62,
     type: 2}
   soundInstruction: {fileID: 8300000, guid: b6d50aea001f2e1479ec3350fd6bc30a, type: 3}

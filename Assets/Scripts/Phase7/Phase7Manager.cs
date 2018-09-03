@@ -68,6 +68,8 @@ public class Phase7Manager : MonoBehaviour {
     void Update()
     {
 
+        totalTimeCount += Time.deltaTime;
+
         if (phaseState == STATE.isPlaying)
         {
             if (firstInput)
