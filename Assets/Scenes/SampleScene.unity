@@ -2141,7 +2141,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Project Mateus Toti
+  m_Text: Projeto Autismo
 --- !u!222 &776539889
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2292,7 +2292,7 @@ MonoBehaviour:
   - {fileID: 1006394072}
   menu: {fileID: 1966183669}
   report: {fileID: 2074600954}
-  buttonDelay: 0.1
+  buttonDelay: 2
 --- !u!4 &845770346
 Transform:
   m_ObjectHideFlags: 0
