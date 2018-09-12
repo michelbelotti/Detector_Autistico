@@ -119,15 +119,31 @@ public class Phase2Manager : MonoBehaviour {
         Destroy(objCharacter);
 
         // envia informacoes para relatorio
-        rm.phase2Total.text = "Total : " + touchLatency.Count;
+        rm.phase2Total = touchLatency.Count;
+
+        float avg = 0;
+        foreach(float t in touchLatency)
+        {
+            avg += t;
+            rm.phase2latency.Add(t);
+        }
+        rm.phase2average = avg / touchLatency.Count;
+        
+        /*
+        rm.phase2TotalText.text = "Total : " + touchLatency.Count;
+
         float average = 0;
-        rm.phase2latency.text = "";
+        rm.phase2latencyText.text = "";
+
         foreach (float t in touchLatency)
         {
             average += t;
-            rm.phase2latency.text += "" + System.Math.Round(t, 2) + "; ";
+            rm.phase2latencyText.text += "" + System.Math.Round(t, 2) + "; ";
         }
+
         average = average / touchLatency.Count;
-        rm.phase2average.text = "Latencia Média: " + System.Math.Round(average, 2);
+
+        rm.phase2averageText.text = "Latencia Média: " + System.Math.Round(average, 2);
+        */
     }
 }

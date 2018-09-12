@@ -1,0 +1,131 @@
+[33mcommit 01f4d6c3230ddb9a22e803a60bc27100bc7f9c12[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Mon Sep 3 01:36:14 2018 -0300
+
+    Versao Final para apresentacao 04_09_2018
+
+[33mcommit 0eb3a5099c85d252e0e709638b5bd466f2260f67[m
+Author: fcontinitorres <fcontinitorres@gmail.com>
+Date:   Mon Sep 3 00:38:17 2018 -0300
+
+    mudando casas decimais dos floats no relatorio
+
+[33mcommit bc6d66f249604d98c69a18fd9ef69ddca8f0931d[m
+Author: fcontinitorres <fcontinitorres@gmail.com>
+Date:   Mon Sep 3 00:14:45 2018 -0300
+
+    mudanda na variavel speed do catavento
+
+[33mcommit 09aa328b0df1b9ad444e162dbfa48aae51daf79a[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Mon Sep 3 00:09:18 2018 -0300
+
+    Correcao do canvas,fase 7 e adicao de novos sprites
+
+[33mcommit 708df5f45edf779c49f75166c8621fcde6fb2690[m
+Author: fcontinitorres <fcontinitorres@gmail.com>
+Date:   Sun Sep 2 23:40:52 2018 -0300
+
+    finaliznado relatorio
+
+[33mcommit a202b688fa95639234d648e26d4362fd90db799f[m
+Author: fcontinitorres <fcontinitorres@gmail.com>
+Date:   Sun Sep 2 21:42:13 2018 -0300
+
+    teste relatorio canvas 1.0
+
+[33mcommit cc9f2f4659629046b6307474da115c905d93a3fb[m
+Author: fcontinitorres <fcontinitorres@gmail.com>
+Date:   Sun Sep 2 17:57:40 2018 -0300
+
+    modificacoes script phase 2
+
+[33mcommit b40e50ed3c736f653ea66dec046aab8482528f24[m
+Author: fcontinitorres <fcontinitorres@gmail.com>
+Date:   Sun Sep 2 15:54:22 2018 -0300
+
+    mudanca no canvas screen size
+
+[33mcommit ee4dd587c3b9620e6512bc66da54243199139926[m
+Author: fcontinitorres <fcontinitorres@gmail.com>
+Date:   Sat Sep 1 15:24:34 2018 -0300
+
+    adicionando scroll para controle do texto e panel para fase 6 e 7
+
+[33mcommit a49e6a70c10da31d80bd85b0b25b54126757e49c[m
+Author: fcontinitorres <fcontinitorres@gmail.com>
+Date:   Tue Aug 28 01:59:00 2018 -0300
+
+    inicio da criacao do report
+
+[33mcommit 22bd8c68f1aae795c7ee1f5f86db68644d514058[m
+Author: fcontinitorres <fcontinitorres@gmail.com>
+Date:   Mon Aug 27 17:57:47 2018 -0300
+
+    add munu to main scene
+
+[33mcommit d0221fe09190f6c8d4b5c9a318769b270d69b37b[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Thu Aug 23 18:14:46 2018 -0300
+
+    Atualização das fases 0 a 6 de acordo com a ultima reunião 20/08
+
+[33mcommit ef4e712f4f9b1eda0bcf08ce904600cd7f326f17[m
+Author: fcontinitorres <fcontinitorres@gmail.com>
+Date:   Wed Aug 22 18:06:20 2018 -0300
+
+    criacao do menu inicial
+
+[33mcommit 1092f61c54cea9904f57d9fc98e8c2a8bd6c4f0c[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Thu Aug 16 19:41:50 2018 -0300
+
+    Todas as fases fechadas versão Alpha 1.0
+
+[33mcommit 87de3df4ab22b94a8e4a96963c65a7f50b24c951[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Wed Aug 15 17:23:40 2018 -0300
+
+    Adicionada fase 5 ao projeto
+
+[33mcommit 94280193c5f9f4b5273bf968202da723adcb236b[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Fri Aug 3 19:47:18 2018 -0300
+
+    Fases 0,1,2,3, e 4 completas
+
+[33mcommit 83c25429f5dc21d7125f6e107d7520839f48813c[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Fri Aug 3 16:18:50 2018 -0300
+
+    fase 3 concluida
+
+[33mcommit b841c87ee9cbaad06232d6463d7c7a7ba5e17be9[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Tue Jul 31 19:20:52 2018 -0300
+
+    Codigo das Fases 0, 1 e 2 completos, atualizacao dos Eventos OnDisable nos Managers de Fases, e atualizacao botao do botao de pular Fase
+
+[33mcommit 686720bff000504f96f05760f6635637f3a5b73c[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Tue Jul 31 17:19:48 2018 -0300
+
+    Fases 0 e 1 completas, mais o GameManager e atualização da fase2
+
+[33mcommit 3237bb4d1514fe6882fad12f6dac19dff22738a1[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Wed Jul 18 18:34:56 2018 -0300
+
+    Criacao GameManager e termino da fase 0
+
+[33mcommit 01fd1430eaf35f786be0eac9e8199366f2cc09fc[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Tue Jul 17 19:51:52 2018 -0300
+
+    Criacao do prototipo do codigo para arrasto e clique em objetos
+
+[33mcommit 5b2401e5b2cb0ff06f4de4687672c0a11b009598[m
+Author: michelbelotti <michelbelotti@gmail.com>
+Date:   Mon Jul 16 19:13:54 2018 -0300
+
+    first commit
