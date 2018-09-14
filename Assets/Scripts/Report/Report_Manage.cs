@@ -10,6 +10,7 @@ public class Report_Manage : MonoBehaviour {
 
     private GameManager scriptGameManager;
 
+    // Painel com todas as inforacoes do relatorio
     public GameObject reportPanel;
 
     //Fase 4 Prefabs
@@ -59,7 +60,7 @@ public class Report_Manage : MonoBehaviour {
     public void CloseReport()
     {
         
-        Report_Save data = new Report_Save(phase2Total);
+        Report_Save data = new Report_Save(phase2latency.Count);
 
         //Fase 2 data
         data.phase2Total = phase2Total;
@@ -71,7 +72,6 @@ public class Report_Manage : MonoBehaviour {
             data.phase2latency[i++] = t;
         }
 
-
         string json = JsonUtility.ToJson(data);
         string fileName = Application.persistentDataPath +"/" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".json";
         //string fileName = Application.persistentDataPath + "/test.json";
@@ -81,7 +81,6 @@ public class Report_Manage : MonoBehaviour {
         Debug.Log(fileName);
 
         File.WriteAllText(fileName, json);
-
     }
 
     public void nextReport()
