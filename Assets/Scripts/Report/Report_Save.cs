@@ -9,4 +9,18 @@ public class Report_Save
     {
         phase2latency = new float[phase2LatencyLength];
     }
+
+    public Report_Save(Report_Save data)
+    {
+        phase2Total = data.phase2Total;
+        phase2average = data.phase2average;
+        phase2latency = new float[data.phase2latency.Length];
+
+        for(int i = 0; i < data.phase2latency.Length; i++)
+        {
+            data.phase2latency[i] = data.phase2latency[i];
+            i++;
+        }
+
+    }
 }

@@ -2,22 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class ShowAllReports : MonoBehaviour {
 
-    public Text repotsNames;
+    //referencia para instanciar objs
+    public GameObject painelReport;
+    public GameObject reportPrefab;
 
-    private string fileName;
+    //caminho para pasta
+    private string filePath;
+
+    private GameObject reportInstance;
+
+    //vetor com todos os reports
+    private Report_Save[] reportDatas;
+    
 
     // Use this for initialization
     void Start () {
-        repotsNames.text = "";
-        fileName = Application.persistentDataPath;
-        foreach (string file in System.IO.Directory.GetFiles(fileName))
+        
+        // cria vetor com todos os reports em reportDatas[];
+        filePath = Application.persistentDataPath;
+        int i = 0;
+        reportDatas = new Report_Save[System.IO.Directory.GetFiles(filePath).Length];
+        foreach (string fileName in System.IO.Directory.GetFiles(filePath))
         {
-            file.Remove(30);
-            repotsNames.text += file + "\n\n";
+            string dataReport = File.ReadAllText(fileName);
+            reportDatas[i++] = JsonUtility.FromJson<Report_Save>(dataReport);
         }
+
+        reportInstance = Instantiate(reportPrefab, painelReport.transform);
+        
 
     }
 
@@ -30,14 +46,17 @@ public class ShowAllReports : MonoBehaviour {
 
 
     }
-
+    
     public void ShowReports()
     {
+        /*
         fileName = Application.persistentDataPath;
         foreach (string file in System.IO.Directory.GetFiles(fileName))
         {
             print("!!!!AQUI: " + file);
         }
+        */
     }
+    
 
 }
