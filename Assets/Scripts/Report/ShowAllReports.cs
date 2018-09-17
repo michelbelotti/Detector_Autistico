@@ -7,7 +7,7 @@ using System.IO;
 public class ShowAllReports : MonoBehaviour {
 
     //referencia para instanciar objs
-    public GameObject painelReport;
+    public GameObject reportPainel;
     public GameObject reportPrefab;
 
     //caminho para pasta
@@ -15,34 +15,32 @@ public class ShowAllReports : MonoBehaviour {
 
     private GameObject reportInstance;
 
+    private List<string> nameFiles = new List<string>();
+
     //vetor com todos os reports
-    private Report_Save[] reportDatas;
-    
+    //private Report_Save[] reportDatas;
 
     // Use this for initialization
-    void Start () {
+    void OnEnable () {
         
         // cria vetor com todos os reports em reportDatas[];
         filePath = Application.persistentDataPath;
         int i = 0;
-        reportDatas = new Report_Save[System.IO.Directory.GetFiles(filePath).Length];
         foreach (string fileName in System.IO.Directory.GetFiles(filePath))
         {
-            string dataReport = File.ReadAllText(fileName);
-            reportDatas[i++] = JsonUtility.FromJson<Report_Save>(dataReport);
+            nameFiles.Add(fileName.Replace(filePath, "").Replace("\\", "").Replace(".json",""));
+            reportInstance = Instantiate(reportPrefab, reportPainel.transform);
+            reportInstance.GetComponentInChildren<Text>().text = nameFiles[i++];
+            reportInstance.GetComponent<Report_Clicked>().pathName = fileName;
         }
 
-        reportInstance = Instantiate(reportPrefab, painelReport.transform);
-        
+        //string dataReport = File.ReadAllText(fileName);
+        //reportDatas[i++] = JsonUtility.FromJson<Report_Save>(dataReport);
 
     }
 
-    void OnEnable() {
-        
-    }
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
 
 
     }
@@ -56,6 +54,15 @@ public class ShowAllReports : MonoBehaviour {
             print("!!!!AQUI: " + file);
         }
         */
+    }
+
+    public void showReport(string path)
+    {
+        print("path: " + path);
+        //mostrar um report
+        //loading do path
+        //desabilitar a lista
+        //abilitar novo painel para 1 report
     }
     
 

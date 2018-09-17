@@ -74,13 +74,15 @@ public class Report_Manage : MonoBehaviour {
 
         string json = JsonUtility.ToJson(data);
         string fileName = Application.persistentDataPath +"/" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".json";
-        //string fileName = Application.persistentDataPath + "/test.json";
 
-        //https://answers.unity.com/questions/16433/get-list-of-all-files-in-a-directory.html
+        //fase 4
 
-        Debug.Log(fileName);
+        //fase 6
+
+        //fase 7
 
         File.WriteAllText(fileName, json);
+
     }
 
     public void nextReport()

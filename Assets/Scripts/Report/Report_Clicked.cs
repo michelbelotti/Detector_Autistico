@@ -6,23 +6,24 @@ public class Report_Clicked : MonoBehaviour {
 
     private Report_Save data;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    [HideInInspector]
+    public string pathName;
+
+    private ShowAllReports showReport;
+
+    // Use this for initialization
+    void Start () {
+        showReport = GameObject.Find("ShowReport").GetComponent<ShowAllReports>() ;
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
-    public Report_Save ReportClicked()
+    public void ReportClicked()
     {
-        return data;
+        showReport.showReport(pathName);
     }
 
-    public void loadReport(Report_Save dt)
-    {
-        data = new Report_Save(dt);
-    }
 }
