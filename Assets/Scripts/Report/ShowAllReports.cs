@@ -9,6 +9,7 @@ public class ShowAllReports : MonoBehaviour {
     //referencia para instanciar objs
     public GameObject reportPainel;
     public GameObject reportPrefab;
+    public GameObject reportSinglePainel;
 
     //caminho para pasta
     private string filePath;
@@ -59,6 +60,7 @@ public class ShowAllReports : MonoBehaviour {
     public void showReport(string path)
     {
         print("path: " + path);
+        reportPainel.gameObject.SetActive(false);        
         //mostrar um report
         //loading do path
         //desabilitar a lista

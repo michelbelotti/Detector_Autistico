@@ -81,6 +81,7 @@ public class Report_Manage : MonoBehaviour {
 
         //fase 7
 
+        Debug.Log(fileName);
         File.WriteAllText(fileName, json);
 
     }
