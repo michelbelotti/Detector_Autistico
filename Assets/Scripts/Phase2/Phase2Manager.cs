@@ -15,7 +15,7 @@ public class Phase2Manager : MonoBehaviour {
 
     // Variaveis Relatório
     public GameObject objReport;
-    private Report_Manage rm;
+    private Report_Manager rm;
 
     private AudioSource myAudioSource;
     private GameObject objGameManager;
@@ -43,7 +43,7 @@ public class Phase2Manager : MonoBehaviour {
         objGameManager = GameObject.Find("GameManager");
         scriptGameManager = objGameManager.GetComponent<GameManager>();
 
-        rm = objReport.GetComponent<Report_Manage>();
+        rm = objReport.GetComponent<Report_Manager>();
 
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
@@ -128,22 +128,5 @@ public class Phase2Manager : MonoBehaviour {
             rm.phase2latency.Add(t);
         }
         rm.phase2average = avg / touchLatency.Count;
-        
-        /*
-        rm.phase2TotalText.text = "Total : " + touchLatency.Count;
-
-        float average = 0;
-        rm.phase2latencyText.text = "";
-
-        foreach (float t in touchLatency)
-        {
-            average += t;
-            rm.phase2latencyText.text += "" + System.Math.Round(t, 2) + "; ";
-        }
-
-        average = average / touchLatency.Count;
-
-        rm.phase2averageText.text = "Latencia Média: " + System.Math.Round(average, 2);
-        */
     }
 }
