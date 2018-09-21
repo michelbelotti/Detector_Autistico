@@ -13,6 +13,10 @@ public class Report_Manage : MonoBehaviour {
     // Painel com todas as inforacoes do relatorio
     public GameObject reportPanel;
 
+    //nome da crianca
+    [HideInInspector]
+    public string childName;
+
     //Fase 4 Prefabs
     public GameObject[] prefabCharacters;
     private GameObject[] objCharacters;

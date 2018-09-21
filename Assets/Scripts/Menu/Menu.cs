@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Menu : MonoBehaviour {
 
+    public GameObject showAllReports;
+
     private GameManager scriptGameManager;
 
 	// Use this for initialization
@@ -19,6 +21,12 @@ public class Menu : MonoBehaviour {
 
     public void startClicked() {
         scriptGameManager.setPhaseTrue();
+    }
+
+    public void reportClicked()
+    {
+        showAllReports.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     public void creditClicked() {
