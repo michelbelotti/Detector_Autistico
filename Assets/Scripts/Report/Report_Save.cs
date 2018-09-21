@@ -1,6 +1,10 @@
 ﻿[System.Serializable]
 public class Report_Save
 {
+
+    //nome da crianca
+    public string childName;
+
     //fase 2
     public int phase2Total;
     public float phase2average;

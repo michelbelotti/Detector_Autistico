@@ -8,12 +8,12 @@ public class InputFieldController : MonoBehaviour {
     public InputField name;
 
     public GameObject reportGO;
-    private Report_Manage reportScript;
+    private Report_Manager reportScript;
     private GameManager gm;
 
     private void OnEnable()
     {
-        reportScript = reportGO.GetComponent<Report_Manage>();
+        reportScript = reportGO.GetComponent<Report_Manager>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 

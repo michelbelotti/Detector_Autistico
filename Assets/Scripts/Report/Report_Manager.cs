@@ -5,6 +5,9 @@ using System.IO;
 
 public class Report_Manager : MonoBehaviour {
 
+    [HideInInspector]
+    public string childName;
+
     //Data Report Phase 2
     [HideInInspector]
     public int phase2Total;
@@ -33,6 +36,8 @@ public class Report_Manager : MonoBehaviour {
     {
         
         Report_Save data = new Report_Save();
+
+        data.childName = childName;
 
         //Fase 2 data
         data.SetPhase2Data(phase2latency.Count);
@@ -72,7 +77,7 @@ public class Report_Manager : MonoBehaviour {
         }
         
         string json = JsonUtility.ToJson(data);
-        string fileName = Application.persistentDataPath + "/" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".json";
+        string fileName = Application.persistentDataPath + "/" + childName + "-" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".json";
 
         Debug.Log(fileName);
         File.WriteAllText(fileName, json);
