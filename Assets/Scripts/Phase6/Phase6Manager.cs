@@ -20,7 +20,7 @@ public class Phase6Manager : MonoBehaviour {
 
     // Variaveis Relatório
     public GameObject objReport;
-    private Report_Manage rm;
+    private Report_Manager rm;
 
     private float totalTimeCount;
 
@@ -57,7 +57,7 @@ public class Phase6Manager : MonoBehaviour {
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        rm = objReport.GetComponent<Report_Manage>();
+        rm = objReport.GetComponent<Report_Manager>();
 
         objDragable = Instantiate(prefabDragable, prefabDragable.transform.position, prefabDragable.transform.rotation);
         objTargetLeft = Instantiate(prefabTargetLeft, prefabTargetLeft.transform.position, prefabTargetLeft.transform.rotation);
@@ -129,7 +129,7 @@ public class Phase6Manager : MonoBehaviour {
         myAudioSource.Stop();
 
         // Mensagem para Report
-        rm.phase6Total.text = "Total de Tentativas: " + tries;
+        rm.phase6TotalTries = tries;
 
         Destroy(objDragable);
         Destroy(objTargetLeft);

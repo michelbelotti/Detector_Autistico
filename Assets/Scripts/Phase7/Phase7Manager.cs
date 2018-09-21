@@ -16,7 +16,7 @@ public class Phase7Manager : MonoBehaviour {
 
     // Variaveis Relatório
     public GameObject objReport;
-    private Report_Manage rm;
+    private Report_Manager rm;
 
     private List<float> touchLatency;
 
@@ -47,7 +47,7 @@ public class Phase7Manager : MonoBehaviour {
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        rm = objReport.GetComponent<Report_Manage>();
+        rm = objReport.GetComponent<Report_Manager>();
 
         objCharacter = Instantiate(prefabCharacter, prefabCharacter.transform.position, prefabCharacter.transform.rotation);
 
@@ -99,16 +99,15 @@ public class Phase7Manager : MonoBehaviour {
         myAudioSource.Stop();
 
         // envia informacoes para relatorio
-        rm.phase7Total.text = "Total : " + touchLatency.Count;
-        float average = 0;
-        rm.phase7latency.text = "";
+        rm.phase7Total = touchLatency.Count;
+
+        float avg = 0;
         foreach (float t in touchLatency)
         {
-            average += t;
-            rm.phase7latency.text += "" + System.Math.Round(t, 2) + "; ";
+            avg += t;
+            rm.phase7latency.Add(t);
         }
-        average = average / touchLatency.Count;
-        rm.phase7average.text = "Latencia Média: " + System.Math.Round(average, 2);
+        rm.phase7average = avg / touchLatency.Count;
 
         Destroy(objCharacter);
     }

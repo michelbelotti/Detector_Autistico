@@ -19,7 +19,7 @@ public class Phase4Manager : MonoBehaviour {
 
     //Relatório Variaveis
     public GameObject objReport;
-    private Report_Manage rm;
+    private Report_Manager rm;
 
     private AudioSource myAudioSource;
     private GameManager scriptGameManager;
@@ -53,7 +53,7 @@ public class Phase4Manager : MonoBehaviour {
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        rm = objReport.GetComponent<Report_Manage>();
+        rm = objReport.GetComponent<Report_Manager>();
 
     objCharacters = new GameObject[prefabCharacters.Length];
 
@@ -142,7 +142,7 @@ public class Phase4Manager : MonoBehaviour {
     {
         foreach (GameObject go in objCharacters)
         {
-            rm.positionsObjs.Add(go.transform.position);
+            rm.phase4PosObjs.Add(go.transform.position);
         }
     }
 
@@ -161,7 +161,6 @@ public class Phase4Manager : MonoBehaviour {
         }
 
         Destroy(objPanel);
-
     }
 
 
