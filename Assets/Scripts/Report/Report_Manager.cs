@@ -81,6 +81,6 @@ public class Report_Manager : MonoBehaviour {
 
         Debug.Log(fileName);
         File.WriteAllText(fileName, json);
-
     }
+
 }
