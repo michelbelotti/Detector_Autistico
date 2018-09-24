@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
-public class Phase0Manager : MonoBehaviour {
+public class Phase0Manager : MonoBehaviour
+{
 
     public float delayToStart = 1;
     public float loopInterval = 3;
-    
+
     public AudioClip soundInstruction;
     public AudioClip soundCongrats;
 
@@ -23,16 +24,16 @@ public class Phase0Manager : MonoBehaviour {
     private STATE phaseState;
     private enum STATE
     {
+        enabling,
         instruction,
         repeat,
         ending,
         finish,
     }
 
-    IEnumerator Start()
+    private void OnEnable()
     {
-
-        phaseState = STATE.instruction;
+        phaseState = STATE.enabling;
 
         timeCount = 0;
 
@@ -40,25 +41,32 @@ public class Phase0Manager : MonoBehaviour {
         scriptGameManager = objGameManager.GetComponent<GameManager>();
 
         objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
-                
+
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
-
-        yield return new WaitForSeconds(delayToStart);
-
-        myAudioSource.Play();
-
-        yield return new WaitForSeconds(myAudioSource.clip.length);
-
-        if (phaseState == STATE.instruction)
-        {
-            phaseState = STATE.repeat;
-        }
     }
-	
-	void Update () {
 
-        if (phaseState == STATE.repeat)
+    void Update()
+    {
+
+        if (phaseState == STATE.enabling)
+        {
+            timeCount += Time.deltaTime;
+            if (timeCount >= delayToStart)
+            {
+                myAudioSource.Play();
+                phaseState = STATE.instruction;
+                timeCount = 0;
+            }
+        }
+        else if (phaseState == STATE.instruction)
+        {
+            if (!myAudioSource.isPlaying)
+            {
+                phaseState = STATE.repeat;
+            }
+        }
+        else if (phaseState == STATE.repeat)
         {
             if (!myAudioSource.isPlaying)
             {
@@ -66,9 +74,8 @@ public class Phase0Manager : MonoBehaviour {
 
                 if (timeCount >= loopInterval)
                 {
-                    timeCount = 0;
-
                     myAudioSource.Play();
+                    timeCount = 0;
                 }
             }
         }
@@ -79,24 +86,25 @@ public class Phase0Manager : MonoBehaviour {
             myAudioSource.Play();
             phaseState = STATE.finish;
         }
-        else if(phaseState == STATE.finish)
+        else if (phaseState == STATE.finish)
         {
             if (!myAudioSource.isPlaying)
             {
                 scriptGameManager.nextPhase();
             }
         }
-        
     }
 
     public void changeState()
     {
-        phaseState = STATE.ending;
+        if (phaseState != STATE.finish)
+        {
+            phaseState = STATE.ending;
+        }
     }
 
     void OnDisable()
     {
-        Debug.Log("OnDisable Phase 0");
         myAudioSource.Stop();
         Destroy(objCharacter);
     }

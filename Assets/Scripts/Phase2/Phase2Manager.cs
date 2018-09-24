@@ -23,10 +23,12 @@ public class Phase2Manager : MonoBehaviour {
     private GameObject objCharacter;
     private float totalTimeCount;
     private float idleTimeCount;
+    private float timeCount;
 
     private STATE phaseState;
     private enum STATE
     {
+        enabling,
         instruction,
         firstInput,
         touchCounter,
@@ -35,6 +37,28 @@ public class Phase2Manager : MonoBehaviour {
 
     private List<float> touchLatency;
 
+    private void OnEnable()
+    {
+        phaseState = STATE.enabling;
+
+        totalTimeCount = 0;
+        idleTimeCount = 0;
+        timeCount = 0;
+
+        objGameManager = GameObject.Find("GameManager");
+        scriptGameManager = objGameManager.GetComponent<GameManager>();
+
+        rm = objReport.GetComponent<Report_Manager>();
+
+        myAudioSource = GetComponent<AudioSource>();
+        myAudioSource.clip = soundInstruction;
+
+        objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
+
+        touchLatency = new List<float>();
+    }
+
+    /*
     IEnumerator Start()
     {
 
@@ -65,10 +89,30 @@ public class Phase2Manager : MonoBehaviour {
         phaseState = STATE.firstInput;
 
     }
+    
+         */
 
     void Update ()
     {
-        if (phaseState == STATE.touchCounter)
+
+        if (phaseState == STATE.enabling)
+        {
+            timeCount += Time.deltaTime;
+            if(timeCount >= delayToStart)
+            {
+                myAudioSource.Play();
+                phaseState = STATE.instruction;
+            }
+        }
+        else if (phaseState == STATE.instruction)
+        {
+            if (!myAudioSource.isPlaying)
+            {
+                myAudioSource.clip = soundToRepeat;
+                phaseState = STATE.firstInput;
+            }
+        }
+        else if (phaseState == STATE.touchCounter)
         {
             totalTimeCount += Time.deltaTime;
             idleTimeCount += Time.deltaTime;
@@ -100,6 +144,8 @@ public class Phase2Manager : MonoBehaviour {
                       
             myAudioSource.Stop();
             myAudioSource.Play();
+
+            idleTimeCount = 0;
         }
         else if (phaseState == STATE.touchCounter)
         {

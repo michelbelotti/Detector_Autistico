@@ -20,37 +20,44 @@ public class Phase1Manager : MonoBehaviour {
     private STATE phaseState;
     private enum STATE
     {
+        enabling,
         instruction,
         repeat,
     }
 
-    IEnumerator Start() {
-        phaseState = STATE.instruction;
-
-        objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
+    private void OnEnable()
+    {
+        phaseState = STATE.enabling;
 
         timeCount = 0;
 
+        objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
+
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
-
-        yield return new WaitForSeconds(delayToStart);
-
-        myAudioSource.Play();
-
-        yield return new WaitForSeconds(myAudioSource.clip.length);
-
-        myAudioSource.clip = soundToRepeat;
-
-        phaseState = STATE.repeat;
-
     }
 	
 	void Update () {
 
-        timeCount += Time.deltaTime;
-
-        if (phaseState == STATE.repeat)
+        if(phaseState == STATE.enabling)
+        {
+            timeCount += Time.deltaTime;
+            if (timeCount >= delayToStart)
+            {
+                myAudioSource.Play();
+                phaseState = STATE.instruction;
+            }
+        }
+        else if(phaseState == STATE.instruction)
+        {
+            if (!myAudioSource.isPlaying)
+            {
+                phaseState = STATE.repeat;
+                myAudioSource.clip = soundToRepeat;
+                timeCount = 0;
+            }
+        }
+        else if (phaseState == STATE.repeat)
         {
             if (!myAudioSource.isPlaying)
             {
@@ -68,7 +75,6 @@ public class Phase1Manager : MonoBehaviour {
 
     void OnDisable()
     {
-        Debug.Log("OnDisable Phase 1");
         myAudioSource.Stop();
         Destroy(objCharacter);
     }
