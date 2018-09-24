@@ -23,7 +23,7 @@ public class Report_Clicked : MonoBehaviour {
 
     public void ReportClicked()
     {
-        showReport.showReport(pathName);
+        showReport.reportClicked(pathName);
     }
 
 }

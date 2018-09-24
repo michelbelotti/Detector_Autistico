@@ -6,46 +6,18 @@ using System.IO;
 
 public class ShowAllReports : MonoBehaviour {
 
-    //referencia para instanciar objs
-    public GameObject reportPainel;
-    public GameObject reportList;
-    public GameObject reportSinglePainel;
-    public GameObject reportPrefab;
-
     public GameObject menu;
 
-    //caminho para pasta
-    private string filePath;
+    public GameObject reportList;
 
-    private GameObject reportInstance;
-    private List<GameObject> reportListInstantiated = new List<GameObject>();
-
-    private string nameFile;
-
-    //vetor com todos os reports
-    //private Report_Save[] reportDatas;
+    public GameObject reportSinglePainel;
+    private Report_Single_Creation reportSingleCriation;
 
     // Use this for initialization
     void OnEnable () {
 
-        
-
-        // cria vetor com todos os reports em reportDatas[];
-        filePath = Application.persistentDataPath;
-        int i = 0;
-        foreach (string fileName in System.IO.Directory.GetFiles(filePath))
-        {
-            nameFile = fileName.Replace(filePath, "").Replace("\\", "").Replace(".json", "");
-            reportInstance = Instantiate(reportPrefab, reportPainel.transform);
-            reportInstance.GetComponentInChildren<Text>().text = nameFile;
-            reportInstance.GetComponent<Report_Clicked>().pathName = fileName;
-            reportListInstantiated.Add(reportInstance);
-
-        }
-
-        //string dataReport = File.ReadAllText(fileName);
-        //reportDatas[i++] = JsonUtility.FromJson<Report_Save>(dataReport);
-
+        reportList.SetActive(true);
+        reportSingleCriation = reportSinglePainel.GetComponent<Report_Single_Creation>();
     }
 
     void Start()
@@ -58,37 +30,18 @@ public class ShowAllReports : MonoBehaviour {
 
 
     }
-    
-    public void ShowReports()
-    {
-        /*
-        fileName = Application.persistentDataPath;
-        foreach (string file in System.IO.Directory.GetFiles(fileName))
-        {
-            print("!!!!AQUI: " + file);
-        }
-        */
-    }
 
-    public void showReport(string path)
+    public void reportClicked(string path)
     {
-        print("path: " + path);
-        reportPainel.gameObject.SetActive(false);        
-        //mostrar um report
-        //loading do path
-        //desabilitar a lista
-        //abilitar novo painel para 1 report
+        reportList.SetActive(false);
+        reportSinglePainel.SetActive(true);
+        reportSingleCriation.loadSave(path);
     }
 
     public void backToManu()
     {
-        foreach (GameObject go in reportListInstantiated)
-        {
-            Destroy(go);
-        }
         menu.SetActive(true);
-        gameObject.SetActive(false);
-        
+        gameObject.SetActive(false);   
     }
 
 }
