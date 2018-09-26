@@ -18,6 +18,7 @@ public class ShowAllReports : MonoBehaviour {
 
         reportList.SetActive(true);
         reportSingleCriation = reportSinglePainel.GetComponent<Report_Single_Creation>();
+        reportSinglePainel.SetActive(false);
     }
 
     void Start()

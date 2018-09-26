@@ -8,29 +8,33 @@ public class Report_Single_Creation : MonoBehaviour {
 
     private Report_Save rs;
 
+    //Vetor com todos os paineis fases 2,4,6 e 7
+    public GameObject[] singlePainels;
+    private int currentPhase;
+
+    //botoes next e back para ativar e desativar
+    public Button next;
+    public Button back;
+
     //Fase 2 textos
-    public GameObject phase2Painel;
     public Text totalPhase2;
     public Text averagePhase2;
     public Text latencyPhase2;
 
     //Fase 4 Posicoes
-    public GameObject phase4Painel;
     //posicoes salvas
     public List<Vector3> phase4PosObjs;
     //prefabs
-    public GameObject[] prefabCharacters;
-    public GameObject prefabCaracter;
+    public GameObject[] Phase4PrefabCharacters;
+    public GameObject Phase4PrefabPainel;
     //instancias
     private GameObject[] objCharacters;
     private GameObject objPainel;
 
     //Fase 6 textos
-    public GameObject phase6Painel;
     public Text phase6Tries;
 
     //Fase 7 textos
-    public GameObject phase7Painel;
     public Text totalPhase7;
     public Text averagePhase7;
     public Text latencyPhase7;
@@ -64,14 +68,20 @@ public class Report_Single_Creation : MonoBehaviour {
             latencyPhase2.text += "" + string.Format("{0:#0.00}", f) + "; ";
         }
 
+        print("AQUI!!!!!");
+
         //fase 4 loading
-        for(int i=0; i< prefabCharacters.Length; i++)
+        /*
+        for(int i=0; i< 8; i++)
         {
             for(int j=0; j<3; j++)
             {
-                //phase4PosObjs
+                Debug.Log("i: " + i + "j: " + j + "rs: " + rs.phase4Positions[i,j]);
             }
         }
+        */
+        Debug.Log("AQUII: " + rs.phase4Positions);
+
 
         // Fase 6 loading
         phase6Tries.text = "Total de tentativas erradas: " + rs.phase6Tries;
@@ -86,6 +96,33 @@ public class Report_Single_Creation : MonoBehaviour {
         }
 
         //Inicia painel fase 2
-        phase2Painel.SetActive(true);
+        currentPhase = 0;
+        singlePainels[currentPhase].SetActive(true);
+        back.gameObject.SetActive(false);
+        next.gameObject.SetActive(true);
+    }
+
+    public void nextPhase()
+    {
+        singlePainels[currentPhase++].SetActive(false);
+        singlePainels[currentPhase].SetActive(true);
+        back.gameObject.SetActive(true);
+
+        if (currentPhase >= singlePainels.Length - 1)
+        {
+            next.gameObject.SetActive(false);
+        }
+    }
+
+    public void backPhase()
+    {
+        singlePainels[currentPhase--].SetActive(false);
+        singlePainels[currentPhase].SetActive(true);
+        next.gameObject.SetActive(true);
+
+        if (currentPhase <= 0)
+        {
+            back.gameObject.SetActive(false);
+        }
     }
 }
