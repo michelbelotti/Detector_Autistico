@@ -10,21 +10,20 @@ public class GameManager : MonoBehaviour {
     public GameObject report;
     public float buttonDelay = 3;
 
-    //public GameObject btnNextPhase;
-    //public GameObject btnJumpPhase;
-
     private int currentPhase;
     private float buttonTimer;
     private bool buttonClicked;
 
+    private Report_Manager scriptReportManager;
+
     void Start () {
+
+        scriptReportManager = GameObject.Find("ReportManager").GetComponent<Report_Manager>();
+
         currentPhase = 0;
         buttonTimer = 0;
         buttonClicked = false;
         menu.SetActive(true);
-
-
-        //deactivateBtn();
     }
 	
 	void Update () {
@@ -49,11 +48,13 @@ public class GameManager : MonoBehaviour {
         else
         {
             currentPhase = phases.Length - 1;
+            scriptReportManager.PreReport();
             Debug.Log("Game Ended!");
         }
         
     }
     
+    /*
     public void jumpPhase()
     {
         phases[currentPhase].SetActive(false);
@@ -72,7 +73,7 @@ public class GameManager : MonoBehaviour {
             Debug.Log("Game Ended!");
         }
 
-    }
+    }*/
 
     public void ButtonDown()
     {
@@ -88,27 +89,14 @@ public class GameManager : MonoBehaviour {
             nextPhase();
         }
     }
-
-    //public void activeBtn()
-    //{
-    //    btnNextPhase.SetActive(true);
-    //    btnJumpPhase.SetActive(true);
-    //}
-
-    //public void deactivateBtn()
-    //{
-    //    btnNextPhase.SetActive(false);
-    //    btnJumpPhase.SetActive(false);
-    //}
-
+    
     public void setPhaseTrue() {
         phases[currentPhase].SetActive(true);
         menu.SetActive(false);
     }
 
-    public void finishReport()
+    public void finishGame()
     {
-        report.SetActive(false);
         currentPhase = 0;
         menu.SetActive(true);
     }

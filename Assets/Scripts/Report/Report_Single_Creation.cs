@@ -80,7 +80,7 @@ public class Report_Single_Creation : MonoBehaviour {
             }
         }
         */
-        Debug.Log("AQUII: " + rs.phase4Positions);
+        Debug.Log("AQUII: ");
 
 
         // Fase 6 loading

@@ -24,8 +24,8 @@ public class Phase_Pre_Report : MonoBehaviour {
         //report.SetActive(true);
         //scriptGameManager.nextPhase();
 
-        scriptReportManager.CloseReport();
-        scriptGameManager.finishReport();
+        //scriptReportManager.CloseReport();
+        //scriptGameManager.finishReport();
     }
 
     void OnDisable()

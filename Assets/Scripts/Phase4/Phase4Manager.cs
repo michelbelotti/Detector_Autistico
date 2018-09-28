@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Phase4Manager : MonoBehaviour {
+public class Phase4Manager : MonoBehaviour
+{
 
     public float delayToStart = 1;
     public float idleMaxTimer = 20;
 
     public int maxObjToWin = 8;
-    
+
     public GameObject prefabPanel;
     public GameObject[] prefabCharacters;
 
@@ -17,12 +18,10 @@ public class Phase4Manager : MonoBehaviour {
     public AudioClip soundEnding;
     public AudioClip[] soundCongrats;
 
-    //Relatório Variaveis
-    public GameObject objReport;
-    private Report_Manager rm;
+    private GameManager scriptGameManager;
+    private Report_Manager scriptReportManager;
 
     private AudioSource myAudioSource;
-    private GameManager scriptGameManager;
     private GameObject objPanel;
     private GameObject[] objCharacters;
     private ContactFilter2D filter;
@@ -41,7 +40,8 @@ public class Phase4Manager : MonoBehaviour {
         ending,
     }
 
-    IEnumerator Start () {
+    IEnumerator Start()
+    {
 
         phaseState = STATE.instruction;
 
@@ -52,10 +52,9 @@ public class Phase4Manager : MonoBehaviour {
         colliders = new Collider2D[prefabCharacters.Length];
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        scriptReportManager = GameObject.Find("ReportManager").GetComponent<Report_Manager>();
 
-        rm = objReport.GetComponent<Report_Manager>();
-
-    objCharacters = new GameObject[prefabCharacters.Length];
+        objCharacters = new GameObject[prefabCharacters.Length];
 
         for (int i = 0; i < prefabCharacters.Length; i++)
         {
@@ -75,8 +74,9 @@ public class Phase4Manager : MonoBehaviour {
 
         phaseState = STATE.isPlaying;
     }
-	
-	void Update () {
+
+    void Update()
+    {
 
         timerCount += Time.deltaTime;
 
@@ -84,12 +84,11 @@ public class Phase4Manager : MonoBehaviour {
         {
             int currentOverlap = Physics2D.OverlapCollider(objPanel.GetComponent<Collider2D>(), filter, colliders);
 
-            Debug.Log("currentOverlap = " + currentOverlap);
             if (overlapCount != currentOverlap)
             {
                 if (currentOverlap > overlapCount)
                 {
-                    
+
                     if (currentOverlap >= maxObjToWin)
                     {
                         phaseState = STATE.congrats;
@@ -100,11 +99,9 @@ public class Phase4Manager : MonoBehaviour {
                     }
                 }
                 overlapCount = currentOverlap;
-
-                Debug.Log("overlapCount = " + overlapCount);
             }
 
-            if(timerCount >= idleMaxTimer)
+            if (timerCount >= idleMaxTimer)
             {
                 phaseState = STATE.ending;
             }
@@ -138,11 +135,11 @@ public class Phase4Manager : MonoBehaviour {
         timerCount = 0;
     }
 
-    public void finalPositionsObjs()
+    private void SendReport()
     {
         foreach (GameObject go in objCharacters)
         {
-            rm.phase4PosObjs.Add(go.transform.position);
+            scriptReportManager.phase4PosObjs.Add(go.transform.position);
         }
     }
 
@@ -150,10 +147,9 @@ public class Phase4Manager : MonoBehaviour {
     {
         Debug.Log("OnDisable Phase 4");
 
-        myAudioSource.Stop();
+        SendReport();
 
-        //envia posicao dos objs instanciados para relatorio
-        finalPositionsObjs();
+        myAudioSource.Stop();
 
         for (int i = 0; i < objCharacters.Length; i++)
         {

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Phase6Manager : MonoBehaviour {
+public class Phase6Manager : MonoBehaviour
+{
 
     public float delayToStart = 1;
 
@@ -18,13 +19,10 @@ public class Phase6Manager : MonoBehaviour {
     public GameObject prefabTargetRight;
     public GameObject prefabIndicator;
 
-    // Variaveis Relatório
-    public GameObject objReport;
-    private Report_Manager rm;
+    private GameManager scriptGameManager;
+    private Report_Manager scriptReportManager;
 
     private float totalTimeCount;
-
-    private GameManager scriptGameManager;
 
     private GameObject objDragable;
     private GameObject objTargetLeft;
@@ -45,7 +43,8 @@ public class Phase6Manager : MonoBehaviour {
         endingPhase,
     }
 
-    IEnumerator Start () {
+    IEnumerator Start()
+    {
 
         phaseState = STATE.instruction;
 
@@ -56,8 +55,7 @@ public class Phase6Manager : MonoBehaviour {
         colliders = new Collider2D[2];
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-        rm = objReport.GetComponent<Report_Manager>();
+        scriptReportManager = GameObject.Find("ReportManager").GetComponent<Report_Manager>();
 
         objDragable = Instantiate(prefabDragable, prefabDragable.transform.position, prefabDragable.transform.rotation);
         objTargetLeft = Instantiate(prefabTargetLeft, prefabTargetLeft.transform.position, prefabTargetLeft.transform.rotation);
@@ -96,13 +94,13 @@ public class Phase6Manager : MonoBehaviour {
         }
         else if (phaseState == STATE.endingPhase)
         {
-            if(!myAudioSource.isPlaying)
+            if (!myAudioSource.isPlaying)
             {
                 scriptGameManager.nextPhase();
             }
         }
     }
-    
+
     public void ObjectRelease()
     {
         tries++;
@@ -122,14 +120,18 @@ public class Phase6Manager : MonoBehaviour {
         }
     }
 
+    private void SendReport()
+    {
+        scriptReportManager.phase6TotalTries = tries;
+    }
+
     void OnDisable()
     {
         Debug.Log("OnDisable Phase 6");
 
-        myAudioSource.Stop();
+        SendReport();
 
-        // Mensagem para Report
-        rm.phase6TotalTries = tries;
+        myAudioSource.Stop();
 
         Destroy(objDragable);
         Destroy(objTargetLeft);

@@ -5,6 +5,8 @@ using System.IO;
 
 public class Report_Manager : MonoBehaviour {
 
+    public GameObject saveButton;
+
     [HideInInspector]
     public string childName;
 
@@ -31,10 +33,37 @@ public class Report_Manager : MonoBehaviour {
     public float phase7average;
     [HideInInspector]
     public List<float> phase7latency;
-    
-    public void CloseReport()
+
+    private GameManager scriptGameManager;
+
+    public void Start()
     {
-        
+
+        scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        phase2latency = new List<float>();
+        phase4PosObjs = new List<Vector3>();
+        phase7latency = new List<float>();
+
+        saveButton.SetActive(false);
+    }
+
+    public void PreReport()
+    {
+        saveButton.SetActive(true);
+    }
+
+    public void ButtonDown()
+    {
+        saveButton.SetActive(false);
+        SaveReport();
+        scriptGameManager.finishGame();
+    }
+
+    public void SaveReport()
+    {
+        double rndNum;
+
         Report_Save data = new Report_Save();
 
         data.childName = childName;
@@ -42,12 +71,15 @@ public class Report_Manager : MonoBehaviour {
         //Fase 2 data
         data.SetPhase2Data(phase2latency.Count);
         data.phase2Total = phase2Total;
-        data.phase2average = phase2average;
+
+        rndNum = System.Math.Round(phase2average, 2);
+        data.phase2average = rndNum;
 
         int i = 0;
-        foreach(float t in phase2latency)
+        foreach (float t in phase2latency)
         {
-            data.phase2latency[i++] = t;
+            rndNum = System.Math.Round(t, 2);
+            data.phase2latency[i++] = rndNum;
         }
 
         //fase 4 data
@@ -56,9 +88,8 @@ public class Report_Manager : MonoBehaviour {
         i = 0;
         foreach (Vector3 v in phase4PosObjs)
         {
-            data.phase4Positions[i, 0] = v.x;
-            data.phase4Positions[i, 1] = v.y;
-            data.phase4Positions[i, 2] = v.z;
+            data.phase4PosX[i] = v.x;
+            data.phase4PosY[i] = v.y;
             i++;
         }
 
@@ -68,12 +99,15 @@ public class Report_Manager : MonoBehaviour {
         //fase 7
         data.SetPhase7Data(phase7latency.Count);
         data.phase7Total = phase7Total;
-        data.phase7average = phase7average;
+
+        rndNum = System.Math.Round(phase7average, 2);
+        data.phase7average = rndNum;
 
         i = 0;
         foreach (float t in phase7latency)
         {
-            data.phase7latency[i++] = t;
+            rndNum = System.Math.Round(t, 2);
+            data.phase7latency[i++] = rndNum;
         }
         
         string json = JsonUtility.ToJson(data);

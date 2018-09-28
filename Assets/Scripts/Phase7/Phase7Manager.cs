@@ -2,28 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Phase7Manager : MonoBehaviour {
+public class Phase7Manager : MonoBehaviour
+{
 
     public float delayToStart = 1;
     public float totalTimer = 60;
-    
+
     public GameObject prefabCharacter;
-    
+
     public AudioClip soundInstruction;
 
     [HideInInspector]
     public bool firstInput;
 
-    // Variaveis Relatório
-    public GameObject objReport;
-    private Report_Manager rm;
+    private GameManager scriptGameManager;
+    private Report_Manager scriptReportManager;
 
     private List<float> touchLatency;
 
     private float totalTimeCount;
     private float lastClickTime;
-
-    private GameManager scriptGameManager;
 
     private GameObject objCharacter;
 
@@ -36,7 +34,8 @@ public class Phase7Manager : MonoBehaviour {
         isPlaying,
     }
 
-    IEnumerator Start () {
+    IEnumerator Start()
+    {
 
         firstInput = false;
 
@@ -46,8 +45,7 @@ public class Phase7Manager : MonoBehaviour {
         lastClickTime = 0f;
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-        rm = objReport.GetComponent<Report_Manager>();
+        scriptReportManager = GameObject.Find("ReportManager").GetComponent<Report_Manager>();
 
         objCharacter = Instantiate(prefabCharacter, prefabCharacter.transform.position, prefabCharacter.transform.rotation);
 
@@ -78,7 +76,7 @@ public class Phase7Manager : MonoBehaviour {
 
                 totalTimeCount += Time.deltaTime;
 
-                if(totalTimeCount >= totalTimer)
+                if (totalTimeCount >= totalTimer)
                 {
                     scriptGameManager.nextPhase();
                 }
@@ -91,23 +89,27 @@ public class Phase7Manager : MonoBehaviour {
         touchLatency.Add(totalTimeCount - lastClickTime);
         lastClickTime = totalTimeCount;
     }
-    
-     void OnDisable()
+
+    private void SendReport()
     {
-        Debug.Log("OnDisable Phase 7");
-
-        myAudioSource.Stop();
-
-        // envia informacoes para relatorio
-        rm.phase7Total = touchLatency.Count;
+        scriptReportManager.phase7Total = touchLatency.Count;
 
         float avg = 0;
         foreach (float t in touchLatency)
         {
             avg += t;
-            rm.phase7latency.Add(t);
+            scriptReportManager.phase7latency.Add(t);
         }
-        rm.phase7average = avg / touchLatency.Count;
+        scriptReportManager.phase7average = avg / touchLatency.Count;
+    }
+
+    void OnDisable()
+    {
+        Debug.Log("OnDisable Phase 7");
+
+        SendReport();
+
+        myAudioSource.Stop();
 
         Destroy(objCharacter);
     }

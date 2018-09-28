@@ -13,8 +13,6 @@ public class Phase5Manager : MonoBehaviour {
     public GameObject prefabDragable;
     public GameObject prefabIndicator;
 
-    private GameManager scriptGameManager;
-
     private GameObject objTarget;
     private GameObject objDragable;
     private GameObject objIndicator;
@@ -38,8 +36,6 @@ public class Phase5Manager : MonoBehaviour {
 
         filter = new ContactFilter2D();
         colliders = new Collider2D[2];
-
-        scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         objTarget = Instantiate(prefabTarget, prefabTarget.transform.position, prefabTarget.transform.rotation);
         objDragable = Instantiate(prefabDragable, prefabDragable.transform.position, prefabDragable.transform.rotation);
@@ -100,7 +96,5 @@ public class Phase5Manager : MonoBehaviour {
         Destroy(objTarget);
         Destroy(objDragable);
         Destroy(objIndicator);
-
-        //scriptGameManager.deactivateBtn();
     }
 }

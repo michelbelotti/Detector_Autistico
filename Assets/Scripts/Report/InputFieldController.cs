@@ -8,12 +8,12 @@ public class InputFieldController : MonoBehaviour {
     public InputField name;
 
     public GameObject reportGO;
-    private Report_Manager reportScript;
+    private Report_Manager scriptReportManager;
     private GameManager gm;
 
     private void OnEnable()
     {
-        reportScript = reportGO.GetComponent<Report_Manager>();
+        scriptReportManager = GameObject.Find("ReportManager").GetComponent<Report_Manager>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -24,7 +24,7 @@ public class InputFieldController : MonoBehaviour {
 
     public void nextPhase()
     {
-        reportScript.childName = name.text;
+        scriptReportManager.childName = name.text;
         gm.nextPhase();
 
         Debug.Log("OnDisable InputField Name Painel");

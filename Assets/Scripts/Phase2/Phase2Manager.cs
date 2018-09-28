@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Phase2Manager : MonoBehaviour {
+public class Phase2Manager : MonoBehaviour
+{
 
     public float delayToStart = 1;
     public float idleTime = 5;
@@ -13,13 +14,10 @@ public class Phase2Manager : MonoBehaviour {
 
     public GameObject prefabCharacter;
 
-    // Variaveis Relatório
-    public GameObject objReport;
-    private Report_Manager rm;
+    private GameManager scriptGameManager;
+    private Report_Manager scriptReportManager;
 
     private AudioSource myAudioSource;
-    private GameObject objGameManager;
-    private GameManager scriptGameManager;
     private GameObject objCharacter;
     private float totalTimeCount;
     private float idleTimeCount;
@@ -45,10 +43,9 @@ public class Phase2Manager : MonoBehaviour {
         idleTimeCount = 0;
         timeCount = 0;
 
-        objGameManager = GameObject.Find("GameManager");
-        scriptGameManager = objGameManager.GetComponent<GameManager>();
+        scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        scriptReportManager = GameObject.Find("ReportManager").GetComponent<Report_Manager>();
 
-        rm = objReport.GetComponent<Report_Manager>();
 
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
@@ -58,47 +55,13 @@ public class Phase2Manager : MonoBehaviour {
         touchLatency = new List<float>();
     }
 
-    /*
-    IEnumerator Start()
-    {
-
-        phaseState = STATE.instruction;
-
-        objGameManager = GameObject.Find("GameManager");
-        scriptGameManager = objGameManager.GetComponent<GameManager>();
-
-        rm = objReport.GetComponent<Report_Manager>();
-
-        myAudioSource = GetComponent<AudioSource>();
-        myAudioSource.clip = soundInstruction;
-
-        objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
-
-        touchLatency = new List<float>();
-
-        totalTimeCount = 0;
-        idleTimeCount = 0;
-
-        yield return new WaitForSeconds(delayToStart);
-
-        myAudioSource.Play();
-
-        yield return new WaitForSeconds(myAudioSource.clip.length);
-
-        myAudioSource.clip = soundToRepeat;
-        phaseState = STATE.firstInput;
-
-    }
-    
-         */
-
-    void Update ()
+    void Update()
     {
 
         if (phaseState == STATE.enabling)
         {
             timeCount += Time.deltaTime;
-            if(timeCount >= delayToStart)
+            if (timeCount >= delayToStart)
             {
                 myAudioSource.Play();
                 phaseState = STATE.instruction;
@@ -126,11 +89,6 @@ public class Phase2Manager : MonoBehaviour {
         {
             if (!myAudioSource.isPlaying)
             {
-                foreach(float item in touchLatency)
-                {
-                    Debug.Log("touchLatency[" + touchLatency.IndexOf(item) + "] = " + item);
-                }
-
                 scriptGameManager.nextPhase();
             }
         }
@@ -141,7 +99,7 @@ public class Phase2Manager : MonoBehaviour {
         if (phaseState == STATE.firstInput)
         {
             phaseState = STATE.touchCounter;
-                      
+
             myAudioSource.Stop();
             myAudioSource.Play();
 
@@ -150,7 +108,7 @@ public class Phase2Manager : MonoBehaviour {
         else if (phaseState == STATE.touchCounter)
         {
             touchLatency.Add(idleTimeCount);
-            
+
             idleTimeCount = 0;
 
             myAudioSource.Stop();
@@ -158,21 +116,27 @@ public class Phase2Manager : MonoBehaviour {
         }
     }
 
+    private void SendReport()
+    {
+        scriptReportManager.phase2Total = touchLatency.Count;
+
+        float avg = 0;
+        foreach (float t in touchLatency)
+        {
+            avg += t;
+            scriptReportManager.phase2latency.Add(t);
+        }
+
+        scriptReportManager.phase2average = avg / touchLatency.Count;
+    }
+
     void OnDisable()
     {
         Debug.Log("OnDisable Phase 2");
+
+        SendReport();
+
         myAudioSource.Stop();
         Destroy(objCharacter);
-
-        // envia informacoes para relatorio
-        rm.phase2Total = touchLatency.Count;
-
-        float avg = 0;
-        foreach(float t in touchLatency)
-        {
-            avg += t;
-            rm.phase2latency.Add(t);
-        }
-        rm.phase2average = avg / touchLatency.Count;
     }
 }
