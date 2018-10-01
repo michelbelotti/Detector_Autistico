@@ -45,4 +45,10 @@ public class ShowAllReports : MonoBehaviour {
         gameObject.SetActive(false);   
     }
 
+    public void backToList()
+    {
+        reportSinglePainel.SetActive(false);
+        reportList.SetActive(true);
+    }
+
 }

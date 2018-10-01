@@ -40,7 +40,7 @@ public class Phase0Manager : MonoBehaviour
         objGameManager = GameObject.Find("GameManager");
         scriptGameManager = objGameManager.GetComponent<GameManager>();
 
-        objCharacter = Instantiate(prefabCharacter, transform.position, transform.rotation);
+        objCharacter = Instantiate(prefabCharacter, prefabCharacter.transform.position, prefabCharacter.transform.rotation);
 
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;

@@ -119,4 +119,21 @@ public class Report_Single_Creation : MonoBehaviour {
             back.gameObject.SetActive(false);
         }
     }
+
+    void OnDisable()
+    {
+        
+        next.gameObject.SetActive(false);
+        back.gameObject.SetActive(false);
+        foreach (GameObject painels in singlePainels)
+        {
+            painels.SetActive(false);
+        }
+
+        foreach ( GameObject go in phase4objCharacters)
+        {
+            Destroy(go);
+        }
+        Destroy(phase4objPainel);
+    }
 }

@@ -19,7 +19,6 @@ public class Report_List_Creation : MonoBehaviour {
 
     private void OnEnable()
     {
-
         // cria vetor com todos os reports em reportDatas[];
         filePath = Application.persistentDataPath;
         int i = 0;

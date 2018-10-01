@@ -7,7 +7,6 @@ public class InputFieldController : MonoBehaviour {
 
     public InputField name;
 
-    public GameObject reportGO;
     private Report_Manager scriptReportManager;
     private GameManager gm;
 
@@ -15,6 +14,7 @@ public class InputFieldController : MonoBehaviour {
     {
         scriptReportManager = GameObject.Find("ReportManager").GetComponent<Report_Manager>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        name.text = "";
     }
 
     // Update is called once per frame

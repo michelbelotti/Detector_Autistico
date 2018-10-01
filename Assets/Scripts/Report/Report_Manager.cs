@@ -6,6 +6,7 @@ using System.IO;
 public class Report_Manager : MonoBehaviour {
 
     public GameObject saveButton;
+    public GameObject cancelButton;
 
     [HideInInspector]
     public string childName;
@@ -46,17 +47,26 @@ public class Report_Manager : MonoBehaviour {
         phase7latency = new List<float>();
 
         saveButton.SetActive(false);
+        cancelButton.SetActive(false);
     }
 
     public void PreReport()
     {
         saveButton.SetActive(true);
+        cancelButton.SetActive(true);
     }
 
     public void ButtonDown()
     {
         saveButton.SetActive(false);
         SaveReport();
+        scriptGameManager.finishGame();
+    }
+
+    public void cancelReport()
+    {
+        saveButton.SetActive(false);
+        cancelButton.SetActive(false);
         scriptGameManager.finishGame();
     }
 
