@@ -11,9 +11,12 @@ public class ShowAllReports : MonoBehaviour {
     public GameObject reportList;
 
     public GameObject buttonBackToList;
+    public GameObject buttonDeleteReport;
 
     public GameObject reportSinglePainel;
     private Report_Single_Creation reportSingleCriation;
+
+    private string reportPath;
 
     // Use this for initialization
     void OnEnable () {
@@ -36,17 +39,38 @@ public class ShowAllReports : MonoBehaviour {
 
     public void reportClicked(string path)
     {
+        reportPath = path;
         reportList.SetActive(false);
         reportSinglePainel.SetActive(true);
         buttonBackToList.SetActive(true);
-        reportSingleCriation.loadSave(path);
+        buttonDeleteReport.SetActive(true);
+        reportSingleCriation.loadSave(reportPath);
     }
 
     public void backToManu()
     {
-        menu.SetActive(true);
         buttonBackToList.SetActive(false);
+        buttonDeleteReport.SetActive(false);
+
+        reportSinglePainel.SetActive(false);
+        reportList.SetActive(false);
         gameObject.SetActive(false);
+
+        menu.SetActive(true);
+    }
+
+    public void deleteReport()
+    {
+        buttonBackToList.SetActive(false);
+        buttonDeleteReport.SetActive(false);
+
+        reportSinglePainel.SetActive(false);
+        reportList.SetActive(false);
+        gameObject.SetActive(false);
+
+        menu.SetActive(true);
+
+        File.Delete(reportPath);
     }
 
     public void backToList()
