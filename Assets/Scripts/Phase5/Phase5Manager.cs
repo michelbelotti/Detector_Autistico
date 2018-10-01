@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Phase5Manager : MonoBehaviour {
+public class Phase5Manager : MonoBehaviour
+{
 
     public float delayToStart = 1;
 
@@ -22,17 +23,22 @@ public class Phase5Manager : MonoBehaviour {
     private ContactFilter2D filter;
     private Collider2D[] colliders;
 
+    private float timeCount;
+
     private STATE phaseState;
     private enum STATE
     {
+        enabling,
         instruction,
         isPlaying,
         resetingPos,
     }
 
-    IEnumerator Start () {
+    private void OnEnable()
+    {
+        phaseState = STATE.enabling;
 
-        phaseState = STATE.instruction;
+        timeCount = 0;
 
         filter = new ContactFilter2D();
         colliders = new Collider2D[2];
@@ -43,21 +49,30 @@ public class Phase5Manager : MonoBehaviour {
 
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
-
-        yield return new WaitForSeconds(delayToStart);
-
-        myAudioSource.Play();
-
-        yield return new WaitForSeconds(myAudioSource.clip.length);
-
-        phaseState = STATE.isPlaying;
     }
 
     void Update()
     {
-        if (phaseState == STATE.resetingPos)
+
+        if (phaseState == STATE.enabling)
         {
-            if(!myAudioSource.isPlaying)
+            timeCount += Time.deltaTime;
+            if (timeCount >= delayToStart)
+            {
+                myAudioSource.Play();
+                phaseState = STATE.instruction;
+            }
+        }
+        else if (phaseState == STATE.instruction)
+        {
+            if (!myAudioSource.isPlaying)
+            {
+                phaseState = STATE.isPlaying;
+            }
+        }
+        else if (phaseState == STATE.resetingPos)
+        {
+            if (!myAudioSource.isPlaying)
             {
                 objDragable.transform.position = prefabDragable.transform.position;
                 phaseState = STATE.isPlaying;
@@ -65,26 +80,33 @@ public class Phase5Manager : MonoBehaviour {
         }
     }
 
-    private void randomSound()
+    private void RandomSound()
     {
         myAudioSource.Stop();
         myAudioSource.clip = soundsCongrats[Random.Range(0, soundsCongrats.Length)];
         myAudioSource.Play();
     }
 
-    public void ObjectRelease()
+    public void CheckObject()
     {
-        int currentOverlap = Physics2D.OverlapCollider(objTarget.GetComponent<Collider2D>(), filter, colliders);
-
-        Debug.Log("currentOverlap " + currentOverlap);
-
-        if(currentOverlap >= 2)
+        if (phaseState == STATE.instruction || phaseState == STATE.enabling)
         {
-            randomSound();
-            
+            phaseState = STATE.isPlaying;
         }
 
-        phaseState = STATE.resetingPos;
+        if (phaseState == STATE.isPlaying)
+        {
+            int currentOverlap = Physics2D.OverlapCollider(objTarget.GetComponent<Collider2D>(), filter, colliders);
+
+            Debug.Log("currentOverlap " + currentOverlap);
+
+            if (currentOverlap >= 2)
+            {
+                RandomSound();
+            }
+
+            phaseState = STATE.resetingPos;
+        }
     }
 
     void OnDisable()

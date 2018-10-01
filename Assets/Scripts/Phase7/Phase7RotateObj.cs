@@ -11,11 +11,11 @@ public class Phase7RotateObj : MonoBehaviour
     private Vector3 avgSpeed;
     private bool isDragging = false;
 
-    private Phase7Manager scriptPhase7;
+    private Phase7Manager scriptPhaseManager;
 
     void Start()
     {
-        scriptPhase7 = GameObject.Find("Phase_7_Manager").GetComponent<Phase7Manager>();
+        scriptPhaseManager = GameObject.Find("Phase_7_Manager").GetComponent<Phase7Manager>();
     }
 
     void Update()
@@ -27,7 +27,7 @@ public class Phase7RotateObj : MonoBehaviour
             if (touch.phase == TouchPhase.Began)
             {
                 isDragging = true;
-                scriptPhase7.addValueOnList();
+                scriptPhaseManager.addValueOnList();
             }
         }
 

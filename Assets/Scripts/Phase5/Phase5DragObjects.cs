@@ -5,11 +5,11 @@ using UnityEngine;
 public class Phase5DragObjects : MonoBehaviour
 {
 
-    private Phase5Manager scriptPhase;
+    private Phase5Manager scriptPhaseManager;
 
     void Start()
     {
-        scriptPhase = GameObject.Find("Phase_5_Manager").GetComponent<Phase5Manager>();
+        scriptPhaseManager = GameObject.Find("Phase_5_Manager").GetComponent<Phase5Manager>();
     }
 
     public void drag()
@@ -20,6 +20,6 @@ public class Phase5DragObjects : MonoBehaviour
 
     public void release()
     {
-        scriptPhase.ObjectRelease();
+        scriptPhaseManager.CheckObject();
     }
 }

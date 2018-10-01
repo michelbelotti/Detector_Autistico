@@ -78,7 +78,16 @@ public class Phase3Manager : MonoBehaviour {
                 phaseState = STATE.isPlaying;
             }
         }
-        else if (phaseState == STATE.isPlaying)
+    }
+
+    public void CheckObject()
+    {
+        if(phaseState == STATE.instruction || phaseState == STATE.enabling)
+        {
+            phaseState = STATE.isPlaying;
+        }
+
+        if (phaseState == STATE.isPlaying)
         {
             int currentOverlap = Physics2D.OverlapCollider(objPanel.GetComponent<Collider2D>(), filter, colliders);
 
@@ -92,6 +101,7 @@ public class Phase3Manager : MonoBehaviour {
             }
         }
     }
+
     private void RandomSound()
     {
         myAudioSource.Stop();

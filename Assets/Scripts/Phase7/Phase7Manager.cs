@@ -17,32 +17,34 @@ public class Phase7Manager : MonoBehaviour
 
     private GameManager scriptGameManager;
     private Report_Manager scriptReportManager;
+        
+    private GameObject objCharacter;
+
+    private AudioSource myAudioSource;
 
     private List<float> touchLatency;
 
     private float totalTimeCount;
     private float lastClickTime;
-
-    private GameObject objCharacter;
-
-    private AudioSource myAudioSource;
+    private float timeCount;
 
     private STATE phaseState;
     private enum STATE
     {
+        enabling,
         instruction,
         isPlaying,
     }
 
-    IEnumerator Start()
+    private void OnEnable()
     {
+        phaseState = STATE.enabling;
 
         firstInput = false;
 
-        totalTimeCount = 0;
-
-        touchLatency = new List<float>();
+        timeCount = 0;
         lastClickTime = 0f;
+        totalTimeCount = 0;
 
         scriptGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         scriptReportManager = GameObject.Find("ReportManager").GetComponent<Report_Manager>();
@@ -52,15 +54,7 @@ public class Phase7Manager : MonoBehaviour
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
 
-        phaseState = STATE.instruction;
-
-        yield return new WaitForSeconds(delayToStart);
-
-        myAudioSource.Play();
-
-        yield return new WaitForSeconds(myAudioSource.clip.length);
-
-        phaseState = STATE.isPlaying;
+        touchLatency = new List<float>();
     }
 
     void Update()
@@ -68,18 +62,28 @@ public class Phase7Manager : MonoBehaviour
 
         totalTimeCount += Time.deltaTime;
 
-        if (phaseState == STATE.isPlaying)
+        if (firstInput)
         {
-            if (firstInput)
+            if (totalTimeCount >= totalTimer)
             {
-                Debug.Log("First Input");
+                scriptGameManager.nextPhase();
+            }
+        }
 
-                totalTimeCount += Time.deltaTime;
-
-                if (totalTimeCount >= totalTimer)
-                {
-                    scriptGameManager.nextPhase();
-                }
+        if (phaseState == STATE.enabling)
+        {
+            timeCount += Time.deltaTime;
+            if (timeCount >= delayToStart)
+            {
+                myAudioSource.Play();
+                phaseState = STATE.instruction;
+            }
+        }
+        else if (phaseState == STATE.instruction)
+        {
+            if (!myAudioSource.isPlaying)
+            {
+                phaseState = STATE.isPlaying;
             }
         }
     }
@@ -88,6 +92,8 @@ public class Phase7Manager : MonoBehaviour
     {
         touchLatency.Add(totalTimeCount - lastClickTime);
         lastClickTime = totalTimeCount;
+
+        firstInput = true;
     }
 
     private void SendReport()

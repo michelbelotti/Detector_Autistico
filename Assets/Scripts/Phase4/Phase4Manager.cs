@@ -28,25 +28,27 @@ public class Phase4Manager : MonoBehaviour
     private Collider2D[] colliders;
 
     private float timerCount;
+    private float idleTimerCount;
 
     private int overlapCount;
 
     private STATE phaseState;
     private enum STATE
     {
+        enabling,
         instruction,
         isPlaying,
         congrats,
         ending,
     }
 
-    IEnumerator Start()
+    private void OnEnable()
     {
-
-        phaseState = STATE.instruction;
+        phaseState = STATE.enabling;
 
         timerCount = 0;
         overlapCount = 0;
+        idleTimerCount = 0;
 
         filter = new ContactFilter2D();
         colliders = new Collider2D[prefabCharacters.Length];
@@ -65,8 +67,12 @@ public class Phase4Manager : MonoBehaviour
 
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
+    }
 
-        yield return new WaitForSeconds(delayToStart);
+    IEnumerator Start()
+    {
+
+           yield return new WaitForSeconds(delayToStart);
 
         myAudioSource.Play();
 
@@ -79,31 +85,26 @@ public class Phase4Manager : MonoBehaviour
     {
 
         timerCount += Time.deltaTime;
+        idleTimerCount += Time.deltaTime;
 
-        if (phaseState == STATE.isPlaying)
+        if (idleTimerCount >= idleMaxTimer)
         {
-            int currentOverlap = Physics2D.OverlapCollider(objPanel.GetComponent<Collider2D>(), filter, colliders);
+            phaseState = STATE.ending;
+        }
 
-            if (overlapCount != currentOverlap)
+        if (phaseState == STATE.enabling)
+        {
+            if (timerCount >= delayToStart)
             {
-                if (currentOverlap > overlapCount)
-                {
-
-                    if (currentOverlap >= maxObjToWin)
-                    {
-                        phaseState = STATE.congrats;
-                    }
-                    else
-                    {
-                        randomSound();
-                    }
-                }
-                overlapCount = currentOverlap;
+                myAudioSource.Play();
+                phaseState = STATE.instruction;
             }
-
-            if (timerCount >= idleMaxTimer)
+        }
+        else if(phaseState == STATE.instruction)
+        {
+            if (!myAudioSource.isPlaying)
             {
-                phaseState = STATE.ending;
+                phaseState = STATE.isPlaying;
             }
         }
         else if (phaseState == STATE.congrats)
@@ -123,7 +124,37 @@ public class Phase4Manager : MonoBehaviour
         }
     }
 
-    private void randomSound()
+    public void CheckObject()
+    {
+        if (phaseState == STATE.instruction || phaseState == STATE.enabling)
+        {
+            phaseState = STATE.isPlaying;
+        }
+
+        if (phaseState == STATE.isPlaying)
+        {
+            int currentOverlap = Physics2D.OverlapCollider(objPanel.GetComponent<Collider2D>(), filter, colliders);
+
+            if (overlapCount != currentOverlap)
+            {
+                if (currentOverlap > overlapCount)
+                {
+
+                    if (currentOverlap >= maxObjToWin)
+                    {
+                        phaseState = STATE.congrats;
+                    }
+                    else
+                    {
+                        RandomSound();
+                    }
+                }
+                overlapCount = currentOverlap;
+            }
+        }
+    }
+
+    private void RandomSound()
     {
         myAudioSource.Stop();
         myAudioSource.clip = soundCongrats[Random.Range(0, soundCongrats.Length)];
@@ -132,7 +163,7 @@ public class Phase4Manager : MonoBehaviour
 
     public void resetIdleTimer()
     {
-        timerCount = 0;
+        idleTimerCount = 0;
     }
 
     private void SendReport()

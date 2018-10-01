@@ -22,8 +22,6 @@ public class Phase6Manager : MonoBehaviour
     private GameManager scriptGameManager;
     private Report_Manager scriptReportManager;
 
-    private float totalTimeCount;
-
     private GameObject objDragable;
     private GameObject objTargetLeft;
     private GameObject objTargetRight;
@@ -34,22 +32,24 @@ public class Phase6Manager : MonoBehaviour
     private ContactFilter2D filter;
     private Collider2D[] colliders;
 
+    private float timeCount;
+
     private STATE phaseState;
     private enum STATE
     {
+        enabling,
         instruction,
         isPlaying,
         resetingPos,
         endingPhase,
     }
 
-    IEnumerator Start()
+    private void OnEnable()
     {
-
-        phaseState = STATE.instruction;
+        phaseState = STATE.enabling;
 
         tries = 0;
-        totalTimeCount = 0;
+        timeCount = 0;
 
         filter = new ContactFilter2D();
         colliders = new Collider2D[2];
@@ -64,30 +64,33 @@ public class Phase6Manager : MonoBehaviour
 
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
-
-        yield return new WaitForSeconds(delayToStart);
-
-        myAudioSource.Play();
-
-        yield return new WaitForSeconds(myAudioSource.clip.length);
-
-        if (phaseState == STATE.instruction)
-        {
-            phaseState = STATE.isPlaying;
-        }
-
     }
 
     void Update()
     {
-        totalTimeCount += Time.deltaTime;
 
         if (tries >= totalTries)
         {
             phaseState = STATE.endingPhase;
         }
 
-        if (phaseState == STATE.resetingPos)
+        if (phaseState == STATE.enabling)
+        {
+            timeCount += Time.deltaTime;
+            if (timeCount >= delayToStart)
+            {
+                myAudioSource.Play();
+                phaseState = STATE.instruction;
+            }
+        }
+        else if (phaseState == STATE.instruction)
+        {
+            if (!myAudioSource.isPlaying)
+            {
+                phaseState = STATE.isPlaying;
+            }
+        }
+        else if (phaseState == STATE.resetingPos)
         {
             objDragable.transform.position = prefabDragable.transform.position;
             phaseState = STATE.isPlaying;
@@ -101,22 +104,30 @@ public class Phase6Manager : MonoBehaviour
         }
     }
 
-    public void ObjectRelease()
+    public void CheckObject()
     {
-        tries++;
-
-        int overlapRight = Physics2D.OverlapCollider(objTargetRight.GetComponent<Collider2D>(), filter, colliders);
-
-        if (overlapRight >= 2)
+        if (phaseState == STATE.instruction || phaseState == STATE.enabling)
         {
-            myAudioSource.Stop();
-            myAudioSource.clip = soundCongrats;
-            myAudioSource.Play();
-            phaseState = STATE.endingPhase;
+            phaseState = STATE.isPlaying;
         }
-        else
+
+        if (phaseState == STATE.isPlaying)
         {
-            phaseState = STATE.resetingPos;
+            tries++;
+
+            int overlapRight = Physics2D.OverlapCollider(objTargetRight.GetComponent<Collider2D>(), filter, colliders);
+
+            if (overlapRight >= 2)
+            {
+                myAudioSource.Stop();
+                myAudioSource.clip = soundCongrats;
+                myAudioSource.Play();
+                phaseState = STATE.endingPhase;
+            }
+            else
+            {
+                phaseState = STATE.resetingPos;
+            }
         }
     }
 

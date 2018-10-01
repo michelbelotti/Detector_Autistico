@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Phase4DragObjects : MonoBehaviour
 {
-    private Phase4Manager scriptPhase4;
+    private Phase4Manager scriptPhaseManager;
 
     void Start()
     {
-        scriptPhase4 = GameObject.Find("Phase_4_Manager").GetComponent<Phase4Manager>();
+        scriptPhaseManager = GameObject.Find("Phase_4_Manager").GetComponent<Phase4Manager>();
     }
 
     public void drag()
@@ -16,6 +16,12 @@ public class Phase4DragObjects : MonoBehaviour
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(point.x, point.y, 0f);
 
-        scriptPhase4.resetIdleTimer();
+        scriptPhaseManager.resetIdleTimer();
+    }
+
+    public void drop()
+    {
+        scriptPhaseManager.CheckObject();
+        scriptPhaseManager.resetIdleTimer();
     }
 }
