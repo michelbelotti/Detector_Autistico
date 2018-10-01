@@ -24,19 +24,22 @@ public class Phase3Manager : MonoBehaviour {
     private Collider2D[] colliders;
 
     private int overlapCount;
+    private float timeCount;
 
     private STATE phaseState;
     private enum STATE
     {
+        enabling,
         instruction,
         isPlaying,
     }
 
-    IEnumerator Start () {
-
-        phaseState = STATE.instruction;
+    private void OnEnable()
+    {
+        phaseState = STATE.enabling;
 
         overlapCount = 0;
+        timeCount = 0;
 
         filter = new ContactFilter2D();
         colliders = new Collider2D[prefabCharacters.Length];
@@ -54,20 +57,28 @@ public class Phase3Manager : MonoBehaviour {
 
         myAudioSource = GetComponent<AudioSource>();
         myAudioSource.clip = soundInstruction;
-
-        yield return new WaitForSeconds(delayToStart);
-
-        myAudioSource.Play();
-
-        yield return new WaitForSeconds(myAudioSource.clip.length);
-
-        phaseState = STATE.isPlaying;
-
     }
-	
-	void Update () {
 
-        if (phaseState == STATE.isPlaying)
+    private void Update () {
+
+        if (phaseState == STATE.enabling)
+        {
+            timeCount += Time.deltaTime;
+
+            if (timeCount >= delayToStart)
+            {
+                myAudioSource.Play();
+                phaseState = STATE.instruction;
+            }
+        }
+        else if (phaseState == STATE.instruction)
+        {
+            if (!myAudioSource.isPlaying)
+            {
+                phaseState = STATE.isPlaying;
+            }
+        }
+        else if (phaseState == STATE.isPlaying)
         {
             int currentOverlap = Physics2D.OverlapCollider(objPanel.GetComponent<Collider2D>(), filter, colliders);
 
@@ -75,21 +86,20 @@ public class Phase3Manager : MonoBehaviour {
             {
                 if (currentOverlap > overlapCount)
                 {
-                    randomSound();
+                    RandomSound();
                 }
                 overlapCount = currentOverlap;
             }
         }
     }
-
-    private void randomSound()
+    private void RandomSound()
     {
         myAudioSource.Stop();
         myAudioSource.clip = soundsCongrats[Random.Range(0, soundsCongrats.Length)];
         myAudioSource.Play();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         Debug.Log("OnDisable Phase 3");
 
