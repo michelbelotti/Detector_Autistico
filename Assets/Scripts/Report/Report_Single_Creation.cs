@@ -23,13 +23,13 @@ public class Report_Single_Creation : MonoBehaviour {
 
     //Fase 4 Posicoes
     //posicoes salvas
-    public List<Vector3> phase4PosObjs;
+    private List<Vector3> phase4PosObjs;
     //prefabs
-    public GameObject[] Phase4PrefabCharacters;
-    public GameObject Phase4PrefabPainel;
+    public GameObject[] phase4PrefabCharacters;
+    public GameObject phase4PrefabPainel;
     //instancias
-    private GameObject[] objCharacters;
-    private GameObject objPainel;
+    private GameObject[] phase4objCharacters;
+    private GameObject phase4objPainel;
 
     //Fase 6 textos
     public Text phase6Tries;
@@ -41,13 +41,13 @@ public class Report_Single_Creation : MonoBehaviour {
 
     private void OnEnable()
     {
-        
+
     }
 
     // Use this for initialization
     void Start () {
-		
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -68,20 +68,14 @@ public class Report_Single_Creation : MonoBehaviour {
             latencyPhase2.text += "" + string.Format("{0:#0.00}", f) + "; ";
         }
 
-        print("AQUI!!!!!");
-
-        //fase 4 loading
-        /*
-        for(int i=0; i< 8; i++)
+        //fase 4 data loading
+        phase4objCharacters = new GameObject[phase4PrefabCharacters.Length];
+        for (int i = 0; i < rs.phase4PosX.Length; i++)
         {
-            for(int j=0; j<3; j++)
-            {
-                Debug.Log("i: " + i + "j: " + j + "rs: " + rs.phase4Positions[i,j]);
-            }
+           phase4objCharacters[i] = Instantiate(phase4PrefabCharacters[i],new Vector3(rs.phase4PosX[i], rs.phase4PosY[i]), new Quaternion(0f, 0f, 0f, 1f));
+           Destroy(phase4objCharacters[i].GetComponent<Phase4DragObjects>());
         }
-        */
-        Debug.Log("AQUII: ");
-
+        phase4objPainel = Instantiate(phase4PrefabPainel, phase4PrefabPainel.transform.position, phase4PrefabPainel.transform.rotation);
 
         // Fase 6 loading
         phase6Tries.text = "Total de tentativas erradas: " + rs.phase6Tries;
