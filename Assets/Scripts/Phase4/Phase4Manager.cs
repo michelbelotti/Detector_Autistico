@@ -69,18 +69,6 @@ public class Phase4Manager : MonoBehaviour
         myAudioSource.clip = soundInstruction;
     }
 
-    IEnumerator Start()
-    {
-
-           yield return new WaitForSeconds(delayToStart);
-
-        myAudioSource.Play();
-
-        yield return new WaitForSeconds(myAudioSource.clip.length);
-
-        phaseState = STATE.isPlaying;
-    }
-
     void Update()
     {
 
@@ -189,6 +177,5 @@ public class Phase4Manager : MonoBehaviour
 
         Destroy(objPanel);
     }
-
 
 }

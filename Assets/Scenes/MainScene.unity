@@ -2567,6 +2567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 1966183669}
   reportList: {fileID: 1454961277}
+  buttonBackToList: {fileID: 1125564054}
   reportSinglePainel: {fileID: 130367007}
 --- !u!114 &685922213
 MonoBehaviour:
@@ -5837,7 +5838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.00058722496, g: 1, b: 0, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6664,7 +6665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1966183670
 RectTransform:
   m_ObjectHideFlags: 0

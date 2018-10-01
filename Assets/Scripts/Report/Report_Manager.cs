@@ -59,6 +59,7 @@ public class Report_Manager : MonoBehaviour {
     public void ButtonDown()
     {
         saveButton.SetActive(false);
+        cancelButton.SetActive(false);
         SaveReport();
         scriptGameManager.finishGame();
     }

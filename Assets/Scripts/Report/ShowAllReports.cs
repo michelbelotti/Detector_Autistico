@@ -10,6 +10,8 @@ public class ShowAllReports : MonoBehaviour {
 
     public GameObject reportList;
 
+    public GameObject buttonBackToList;
+
     public GameObject reportSinglePainel;
     private Report_Single_Creation reportSingleCriation;
 
@@ -36,13 +38,15 @@ public class ShowAllReports : MonoBehaviour {
     {
         reportList.SetActive(false);
         reportSinglePainel.SetActive(true);
+        buttonBackToList.SetActive(true);
         reportSingleCriation.loadSave(path);
     }
 
     public void backToManu()
     {
         menu.SetActive(true);
-        gameObject.SetActive(false);   
+        buttonBackToList.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void backToList()
