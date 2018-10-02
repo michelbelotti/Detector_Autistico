@@ -105,6 +105,8 @@ public class Phase0Manager : MonoBehaviour
 
     void OnDisable()
     {
+        Debug.Log("OnDisable Phase 0");
+
         myAudioSource.Stop();
         Destroy(objCharacter);
     }

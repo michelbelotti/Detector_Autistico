@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour {
 
     public GameObject[] phases;
     public GameObject menu;
-    public GameObject report;
     public float buttonDelay = 3;
 
     private int currentPhase;
@@ -36,14 +35,14 @@ public class GameManager : MonoBehaviour {
     public void nextPhase()
     {
         phases[currentPhase].SetActive(false);
-        Debug.Log("Phase " + currentPhase + " Ended");
+        Debug.Log("Phase " + phases[currentPhase].name + " Ended");
 
         currentPhase++;
 
         if (currentPhase < phases.Length)
         {
             phases[currentPhase].SetActive(true);
-            Debug.Log("Phase " + currentPhase + " Start");
+            Debug.Log("Phase " + phases[currentPhase].name + " Started");
         }
         else
         {
@@ -54,27 +53,6 @@ public class GameManager : MonoBehaviour {
         
     }
     
-    /*
-    public void jumpPhase()
-    {
-        phases[currentPhase].SetActive(false);
-        Debug.Log("Phase " + currentPhase + " Ended");
-
-        currentPhase += 2;
-
-        if (currentPhase < phases.Length)
-        {
-            phases[currentPhase].SetActive(true);
-            Debug.Log("Phase " + currentPhase + " Start");
-        }
-        else
-        {
-            currentPhase = phases.Length - 1;
-            Debug.Log("Game Ended!");
-        }
-
-    }*/
-
     public void ButtonDown()
     {
         buttonTimer = 0;

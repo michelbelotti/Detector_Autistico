@@ -54,6 +54,7 @@ public class Phase1Manager : MonoBehaviour {
             {
                 phaseState = STATE.repeat;
                 myAudioSource.clip = soundToRepeat;
+                myAudioSource.Play();
                 timeCount = 0;
             }
         }
@@ -75,6 +76,8 @@ public class Phase1Manager : MonoBehaviour {
 
     void OnDisable()
     {
+        Debug.Log("OnDisable Phase 1");
+
         myAudioSource.Stop();
         Destroy(objCharacter);
     }

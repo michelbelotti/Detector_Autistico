@@ -126,6 +126,10 @@ public class Report_Manager : MonoBehaviour {
 
         Debug.Log(fileName);
         File.WriteAllText(fileName, json);
+
+        phase2latency.Clear();
+        phase4PosObjs.Clear();
+        phase7latency.Clear();
     }
 
 }
